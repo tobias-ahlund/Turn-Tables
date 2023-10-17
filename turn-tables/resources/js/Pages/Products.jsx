@@ -17,9 +17,9 @@ export default function Products() {
         <>
             <h1>Products</h1>
             <ul>
-                {products.map((product) => {
+                {products.map((product) => (
                     <li key={product._id}>{product.title}</li>
-                })}
+                ))} 
             </ul>
         </>
     );
