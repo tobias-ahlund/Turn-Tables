@@ -4,6 +4,7 @@ import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 
 export default function Product() {
     const [product, setProduct] = useState(null);
+    console.log(product);
 
     const slug = "/" + location.pathname.split('/').slice(-1)[0];
 
@@ -18,6 +19,11 @@ export default function Product() {
     return (
         <>
             <h2>Product</h2>
+            <a href="/products"><span>Products</span></a>
+            <span> &gt; </span>
+            <span>{product && product.subcategory.title}</span>
+            <span> &gt; </span>
+            <span>{product && product.title}</span>
             <section>
                 <div>
                 {product && (

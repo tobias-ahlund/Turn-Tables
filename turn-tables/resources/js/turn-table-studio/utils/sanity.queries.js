@@ -6,10 +6,25 @@ const getAllProducts = `*[_type == 'product'] {
   image,
   description,
   price,
-  currency
+  currency,
+  slug,
+  subcategory->{
+    title
+  },
 }`;
 
-const getProduct = `*[_type == "product" && slug.current == $slug][0]`
+const getProduct = `*[_type == "product" && slug.current == $slug][0] {
+  _id,
+  title,
+  image,
+  description,
+  price,
+  currency,
+  slug,
+  subcategory->{
+    title
+  },
+}`
 
 const fetchAllProducts = () => client.fetch(getAllProducts);
 
