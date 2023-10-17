@@ -30,7 +30,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/products', function () {
-    return Inertia::render('Products');
+    return Inertia::render('Products/Products');
+});
+
+Route::get('/products/{slug}', function ($slug) {
+    return Inertia::render('Products/Product', [
+        'slug' => $slug,
+    ]);
 });
 
 Route::middleware('auth')->group(function () {
@@ -39,4 +45,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
