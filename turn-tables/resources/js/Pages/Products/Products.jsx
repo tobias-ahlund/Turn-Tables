@@ -8,10 +8,10 @@ export default function Products() {
 
     useEffect(() => {
         fetchAllProducts()
-          .then((data) => {
-            setProducts(data);
-          })
-          .catch((error) => console.error('Error fetching products:', error));
+            .then((data) => {
+                setProducts(data);
+            })
+            .catch((error) => console.error('Error fetching products:', error));
       }, []);
 
     return (
@@ -20,10 +20,12 @@ export default function Products() {
             <section>
                 {products.map((product) => (
                     <div key={product._id}>
-                        <p>{product.title}</p>
-                        <img src={urlFor(product.image)} alt="Picture of the product." />
-                        <p>{product.description}</p>
-                        <p>{product.price} {product.currency}</p>
+                        <a href={`/products${product.slug.current}`}>
+                            <p>{product.title}</p>
+                            <img src={urlFor(product.image)} alt="Picture of the product." />
+                            <p>{product.description}</p>
+                            <p>{product.price} {product.currency}</p>
+                        </a>
                     </div>
                 ))}
             </section>

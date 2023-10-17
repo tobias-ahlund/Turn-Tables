@@ -6,10 +6,15 @@ const getAllProducts = `*[_type == 'product'] {
   image,
   description,
   price,
-  currency,
-  slug,
+  currency
 }`;
+
+const getProduct = `*[_type == "product" && slug.current == $slug][0]`
 
 const fetchAllProducts = () => client.fetch(getAllProducts);
 
-export { fetchAllProducts };
+const fetchProduct = (slug) => {
+  return client.fetch(getProduct, { slug });
+};
+
+export { fetchAllProducts, fetchProduct };
