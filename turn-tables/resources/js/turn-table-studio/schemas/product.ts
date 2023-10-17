@@ -34,10 +34,10 @@ export default {
             type: 'slug',
           },
           {
-            name: 'category',
-            title: 'Category',
+            name: 'subcategory',
+            title: 'Subcategory',
             type: 'reference',
-            to: [{type: 'category'}]
+            to: [{type: 'subcategory'}]
           },
     ],
     preview: {

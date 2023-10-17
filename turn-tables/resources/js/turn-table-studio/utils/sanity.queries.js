@@ -6,7 +6,8 @@ const getAllProducts = `*[_type == 'product'] {
   image,
   description,
   price,
-  currency
+  currency,
+  slug,
 }`;
 
 const fetchAllProducts = () => client.fetch(getAllProducts);
