@@ -22,7 +22,10 @@ const getProduct = `*[_type == "product" && slug.current == $slug][0] {
   currency,
   slug,
   subcategory->{
-    title
+    title,
+    category->{
+      title,
+    },
   },
 }`
 
