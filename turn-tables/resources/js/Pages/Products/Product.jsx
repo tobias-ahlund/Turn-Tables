@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchProduct } from "@/turn-table-studio/utils/sanity.queries"
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { ProductWrapper } from '@/Components/ProductWrapper.style';
+import StockStatus from '@/Components/StockStatus';
 
 export default function Product() {
     const [product, setProduct] = useState(null);
@@ -34,6 +35,7 @@ export default function Product() {
                             <p>{product.title}</p>
                             <p>{product.description}</p>
                             <p>{product.price} {product.currency}</p>
+                            <StockStatus />
                         </div>
                     </>
                 )}
