@@ -64,11 +64,11 @@ export default function Products() {
             
             <br />
             <br />
-            {categories.map((category) =>
-                <>
+            {categories.map((category, index) =>
+                <div key={index}>
                     <button onClick={() => fetchProdByCat(category)}>{category}</button>
                     <br />
-                </>
+                </div>
             )}
             
             {/* Search result products */}
