@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchAllProducts } from "@/turn-table-studio/utils/sanity.queries";
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
+import { ProductsWrapper } from '../../Components/ProductsWrapper.style';
 
 export default function Products() {
 
@@ -17,7 +18,7 @@ export default function Products() {
     return (
         <>
             <h1>Products</h1>
-            <section>
+            <ProductsWrapper>
                 {products.map((product) => (
                     <div key={product._id}>
                         <a href={`/products${product.slug.current}`}>
@@ -28,7 +29,7 @@ export default function Products() {
                         </a>
                     </div>
                 ))}
-            </section>
+            </ProductsWrapper>
         </>
     );
 }
