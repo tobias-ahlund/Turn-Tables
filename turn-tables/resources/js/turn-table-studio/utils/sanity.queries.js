@@ -4,7 +4,6 @@ const getAllProducts = `*[_type == 'product'] {
   _id,
   title,
   image,
-  description,
   price,
   currency,
   slug,

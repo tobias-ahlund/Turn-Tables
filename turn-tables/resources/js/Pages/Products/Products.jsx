@@ -76,9 +76,8 @@ export default function Products() {
                 {productSearch && filteredProducts.map((product) => (
                     <div key={product._id}>
                         <a href={`/products${product.slug.current}`}>
-                            <p>{product.title}</p>
                             <img src={urlFor(product.image)} alt="Picture of the product." />
-                            <p>{product.description}</p>
+                            <p>{product.title}</p>
                             <p>{product.price} {product.currency}</p>
                         </a>
                     </div>
@@ -90,9 +89,8 @@ export default function Products() {
                 {prodsByCat && prodsByCat.map((product) => (
                     <div key={product._id}>
                         <a href={`/products${product.slug.current}`}>
-                            <p>{product.title}</p>
                             <img src={urlFor(product.image)} alt="Picture of the product." />
-                            <p>{product.description}</p>
+                            <p>{product.title}</p>
                             <p>{product.price} {product.currency}</p>
                         </a>
                     </div>
@@ -106,9 +104,8 @@ export default function Products() {
                 {products.map((product) => (
                     <div key={product._id}>
                         <a href={`/products${product.slug.current}`}>
-                            <p>{product.title}</p>
                             <img src={urlFor(product.image)} alt="Picture of the product." />
-                            <p>{product.description}</p>
+                            <p>{product.title}</p>
                             <p>{product.price} {product.currency}</p>
                         </a>
                     </div>
