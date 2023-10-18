@@ -9,7 +9,10 @@ const getAllProducts = `*[_type == 'product'] {
   currency,
   slug,
   subcategory->{
-    title
+    title,
+    category->{
+      title,
+    },
   },
 }`;
 
