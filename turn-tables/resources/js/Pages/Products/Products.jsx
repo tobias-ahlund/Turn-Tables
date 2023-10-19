@@ -3,6 +3,7 @@ import { fetchAllProducts } from "@/turn-table-studio/utils/sanity.queries";
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { ProductsWrapper } from '../../Components/ProductsWrapper.style';
 import SearchBar from '@/Components/SearchBar';
+import DefaultLayout from '@/Layouts/DefaultLayout';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -52,65 +53,67 @@ export default function Products() {
 
     return (
         <>
-            <SearchBar onSearch={onSearch}/>
+            <DefaultLayout>
+                <SearchBar onSearch={onSearch}/>
 
-            {productSearch && filteredProducts.length !== 0 && (
-                <>
-                    <h2>Showing results for "{productSearch}"</h2>
-                    <p>We found {filteredProducts.length} products.</p>
-                </>
-            )}
-            {productSearch && filteredProducts.length === 0 && <h2>No results for "{productSearch}"</h2>}
-            
-            <br />
-            <br />
-            {categories.map((category, index) =>
-                <div key={index}>
-                    <button onClick={() => fetchProdByCat(category)}>{category}</button>
-                    <br />
-                </div>
-            )}
-            
-            {/* Search result products */}
-            <ProductsWrapper>
-                {productSearch && filteredProducts.map((product) => (
-                    <div key={product._id}>
-                        <a href={`/products${product.slug.current}`}>
-                            <img src={urlFor(product.image)} alt="Picture of the product." />
-                            <p>{product.title}</p>
-                            <p>{product.price} {product.currency}</p>
-                        </a>
-                    </div>
-                ))}
-            </ProductsWrapper>
+                {productSearch && filteredProducts.length !== 0 && (
+                    <>
+                        <h2>Showing results for "{productSearch}"</h2>
+                        <p>We found {filteredProducts.length} products.</p>
+                    </>
+                )}
+                {productSearch && filteredProducts.length === 0 && <h2>No results for "{productSearch}"</h2>}
                 
-            {/* Filtered products by category */}
-            {!productSearch && <ProductsWrapper>
-                {prodsByCat && prodsByCat.map((product) => (
-                    <div key={product._id}>
-                        <a href={`/products${product.slug.current}`}>
-                            <img src={urlFor(product.image)} alt="Picture of the product." />
-                            <p>{product.title}</p>
-                            <p>{product.price} {product.currency}</p>
-                        </a>
+                <br />
+                <br />
+                {categories.map((category, index) =>
+                    <div key={index}>
+                        <button onClick={() => fetchProdByCat(category)}>{category}</button>
+                        <br />
                     </div>
-                ))}
-            </ProductsWrapper>}
+                )}
+                
+                {/* Search result products */}
+                <ProductsWrapper>
+                    {productSearch && filteredProducts.map((product) => (
+                        <div key={product._id}>
+                            <a href={`/products${product.slug.current}`}>
+                                <img src={urlFor(product.image)} alt="Picture of the product." />
+                                <p>{product.title}</p>
+                                <p>{product.price} {product.currency}</p>
+                            </a>
+                        </div>
+                    ))}
+                </ProductsWrapper>
+                    
+                {/* Filtered products by category */}
+                {!productSearch && <ProductsWrapper>
+                    {prodsByCat && prodsByCat.map((product) => (
+                        <div key={product._id}>
+                            <a href={`/products${product.slug.current}`}>
+                                <img src={urlFor(product.image)} alt="Picture of the product." />
+                                <p>{product.title}</p>
+                                <p>{product.price} {product.currency}</p>
+                            </a>
+                        </div>
+                    ))}
+                </ProductsWrapper>}
 
-            {productSearch && <hr />}
-            
-            {/* All products */}
-            {!prodsByCat && !productSearch && <ProductsWrapper>
-                {products.map((product) => (
-                    <div key={product._id}>
-                        <a href={`/products${product.slug.current}`}>
-                            <img src={urlFor(product.image)} alt="Picture of the product." />
-                            <p>{product.title}</p>
-                            <p>{product.price} {product.currency}</p>
-                        </a>
-                    </div>
-                ))}
-            </ProductsWrapper>}
+                {productSearch && <hr />}
+                
+                {/* All products */}
+                {!prodsByCat && !productSearch && <ProductsWrapper>
+                    {products.map((product) => (
+                        <div key={product._id}>
+                            <a href={`/products${product.slug.current}`}>
+                                <img src={urlFor(product.image)} alt="Picture of the product." />
+                                <p>{product.title}</p>
+                                <p>{product.price} {product.currency}</p>
+                            </a>
+                        </div>
+                    ))}
+                </ProductsWrapper>}
+            </DefaultLayout>
         </>
     );
 }
