@@ -85,7 +85,7 @@ export default function Products() {
                 <ProductsWrapper>
                     {productSearch && filteredProducts.map((product) => (
                         <div key={product._id}>
-                            <a href={`/products${product.slug.current}`}>
+                            <a href={`/products/${product.subcategory.category.title}/${product.subcategory.title}${product.slug.current}`}>
                                 <img src={urlFor(product.image)} alt="Picture of the product." />
                                 <p>{product.title}</p>
                                 <p>{product.price} {product.currency}</p>
@@ -98,7 +98,7 @@ export default function Products() {
                 {!productSearch && <ProductsWrapper>
                     {prodsByCat && prodsByCat.map((product) => (
                         <div key={product._id}>
-                            <a href={`/products${product.slug.current}`}>
+                            <a href={`/products/${product.subcategory.category.title}/${product.subcategory.title}${product.slug.current}`}>
                                 <img src={urlFor(product.image)} alt="Picture of the product." />
                                 <p>{product.title}</p>
                                 <p>{product.price} {product.currency}</p>
