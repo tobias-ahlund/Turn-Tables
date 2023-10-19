@@ -53,9 +53,7 @@ export default function Products() {
 
     return (
         <>
-            <DefaultLayout>
-                <SearchBar onSearch={onSearch}/>
-
+            <DefaultLayout onSearch={onSearch}>
                 {productSearch && filteredProducts.length !== 0 && (
                     <>
                         <h2>Showing results for "{productSearch}"</h2>

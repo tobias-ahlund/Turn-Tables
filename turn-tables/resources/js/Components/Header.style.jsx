@@ -3,6 +3,7 @@ import Wishlist from "@/public/images/Wishlist.svg";
 import Menu from "@/Components/Menu.style";
 import ShoppingCart from "@/public/images/ShoppingCart.svg";
 import Logo from "./Logo";
+import SearchBar from "@/Components/SearchBar";
 
 const HeaderWrapper = styled.header`
     background-color: lightgray;
@@ -14,15 +15,15 @@ const HeaderWrapper = styled.header`
     }
 `
 
-const headerItems = [
-    <Logo />,
-    "Search bar",
-    ShoppingCart,
-    Wishlist,
-    <Menu />,
-];
+const Header = ({ onSearch }) => {
+    const headerItems = [
+        <Logo />,
+        <SearchBar onSearch={onSearch}/>,
+        ShoppingCart,
+        Wishlist,
+        <Menu />,
+    ];
 
-const Header = () => {
     return (
         <HeaderWrapper>
             <ul id="headerListItems">

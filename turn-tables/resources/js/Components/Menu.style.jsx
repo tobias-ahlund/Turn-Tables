@@ -43,8 +43,6 @@ const Menu = () => {
         setShowMenu(!showMenu);
     }
 
-    console.log(showMenu);
-
     return (
         <MenuWrapper>
             <button onClick={() => handleToggleMenu()}>

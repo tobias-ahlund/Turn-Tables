@@ -1,10 +1,10 @@
 import Header from "@/Components/Header.style";
 import Footer from "@/Components/Footer.style";
 
-export default function DefaultLayout({ children }) {
+export default function DefaultLayout({ children, onSearch }) {
     return (
         <div>
-            <Header />
+            <Header onSearch={onSearch}/>
    
             <main>
                 {children}
