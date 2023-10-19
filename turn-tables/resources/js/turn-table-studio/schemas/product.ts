@@ -34,12 +34,18 @@ export default {
             type: 'slug',
           },
           {
+            name: 'category',
+            title: 'Category',
+            type: 'reference',
+            to: [{ type: 'category' }],
+          },
+          {
             name: 'subcategory',
             title: 'Subcategory',
             type: 'reference',
-            to: [{type: 'subcategory'}]
+            to: [{type: 'subcategory'}],
           },
-    ],
+    ], 
     preview: {
         select: {
             title: 'title',

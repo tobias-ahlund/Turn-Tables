@@ -15,7 +15,24 @@ const getAllProducts = `*[_type == 'product'] {
   },
 }`;
 
-const getProduct = `*[_type == "product" && slug.current == $slug][0] {
+const getProductsBySlug = `*[_type == 'product' && category->slug.current == $slug]
+{
+  _id,
+  title,
+  image,
+  description,
+  price,
+  currency,
+  slug,
+  category->{
+    title,
+  },
+  subcategory->{
+    title,
+  }
+}`;
+
+const getProductBySlug = `*[_type == "product" && slug.current == $slug][0] {
   _id,
   title,
   image,
@@ -29,12 +46,25 @@ const getProduct = `*[_type == "product" && slug.current == $slug][0] {
       title,
     },
   },
-}`
+}`;
+
+const getAllCategories = `*[_type == 'category'] {
+  _id,
+  title,
+  slug,
+  description,
+}`;
 
 const fetchAllProducts = () => client.fetch(getAllProducts);
 
-const fetchProduct = (slug) => {
-  return client.fetch(getProduct, { slug });
+const fetchAllCategories = () => client.fetch(getAllCategories);
+
+const fetchProductBySlug = (slug) => {
+  return client.fetch(getProductBySlug, { slug });
 };
 
-export { fetchAllProducts, fetchProduct };
+const fetchProductsBySlug = (slug) => {
+  return client.fetch(getProductsBySlug, { slug });
+};
+
+export { fetchAllProducts, fetchProductBySlug, fetchProductsBySlug, fetchAllCategories };

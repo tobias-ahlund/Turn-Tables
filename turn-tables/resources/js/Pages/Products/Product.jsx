@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchProduct } from "@/turn-table-studio/utils/sanity.queries"
+import { fetchProductBySlug } from "@/turn-table-studio/utils/sanity.queries"
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { ProductWrapper } from '@/Components/ProductWrapper.style';
 import StockStatus from '@/Components/StockStatus';
@@ -12,7 +12,7 @@ export default function Product() {
     const slug = "/" + location.pathname.split('/').slice(-1)[0];
 
     useEffect(() => {
-        fetchProduct(slug)
+        fetchProductBySlug(slug)
             .then((data) => {
                 setProduct(data);
             })

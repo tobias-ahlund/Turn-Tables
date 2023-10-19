@@ -33,9 +33,17 @@ Route::get('/products', function () {
     return Inertia::render('Products/Products');
 })->name('products');
 
-Route::get('/products/{slug}', function ($slug) {
+Route::get('/products/{categorySlug}/{subCategorySlug}/{productSlug}', function ($categorySlug, $subCategorySlug, $productSlug) {
     return Inertia::render('Products/Product', [
-        'slug' => $slug,
+        'categorySlug' => $categorySlug,
+        'subCategorySlug' => $subCategorySlug,
+        'productSlug' => $productSlug,
+    ]);
+});
+
+Route::get('/products/{categorySlug}', function ($categorySlug) {
+    return Inertia::render('Products/ProductsByCategory', [
+        'categorySlug' => $categorySlug,
     ]);
 });
 

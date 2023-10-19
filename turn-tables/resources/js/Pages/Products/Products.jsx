@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchAllProducts } from "@/turn-table-studio/utils/sanity.queries";
+import { fetchAllProducts, fetchAllCategories } from "@/turn-table-studio/utils/sanity.queries";
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { ProductsWrapper } from '../../Components/ProductsWrapper.style';
 import SearchBar from '@/Components/SearchBar';
@@ -7,6 +7,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [productSearch, setProductSearch] = useState("")
     const [prodsByCat, setProdsByCat] = useState("");
 
@@ -16,6 +17,13 @@ export default function Products() {
                 setProducts(data);
             })
             .catch((error) => console.error('Error fetching products:', error));
+
+        fetchAllCategories()
+            .then((data) => {
+                setCategories(data);
+                console.log(data);
+            })
+            .catch((error) => console.error('Error fetching categories:', error));
     }, []);
 
     function onSearch(searchQuery) {
@@ -44,12 +52,12 @@ export default function Products() {
             .catch((error) => console.error('Error fetching products:', error));
     }
 
-    const categories = [
-        "All products",
-        "Furniture",
-        "Lighting",
-        "Decoration"
-    ]
+    // const categories = [
+    //     "All products",
+    //     "Furniture",
+    //     "Lighting",
+    //     "Decoration"
+    // ]
 
     return (
         <>
@@ -64,9 +72,11 @@ export default function Products() {
                 
                 <br />
                 <br />
-                {categories.map((category, index) =>
-                    <div key={index}>
-                        <button onClick={() => fetchProdByCat(category)}>{category}</button>
+                {categories.map((category) =>
+                    <div key={category._id}>
+                        <a href={`/products${category.slug.current}`}>
+                        <button onClick={() => fetchProdByCat(category.title)}>{category.title}</button>
+                        </a>
                         <br />
                     </div>
                 )}
@@ -103,7 +113,7 @@ export default function Products() {
                 {!prodsByCat && !productSearch && <ProductsWrapper>
                     {products.map((product) => (
                         <div key={product._id}>
-                            <a href={`/products${product.slug.current}`}>
+                            <a href={`/products/${product.subcategory.category.title}/${product.subcategory.title}${product.slug.current}`}>
                                 <img src={urlFor(product.image)} alt="Picture of the product." />
                                 <p>{product.title}</p>
                                 <p>{product.price} {product.currency}</p>
