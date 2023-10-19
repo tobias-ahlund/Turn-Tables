@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import Wishlist from "@/public/images/Wishlist.svg";
+import Hamburger from "@/public/images/Hamburger.svg";
+import ShoppingCart from "@/public/images/ShoppingCart.svg";
+import Logo from "./Logo";
 
 const HeaderWrapper = styled.header`
     background-color: lightgray;
@@ -6,15 +10,16 @@ const HeaderWrapper = styled.header`
     & ul {
         display: flex;
         justify-content: space-around;
+        align-items: center;
     }
 `
 
 const headerItems = [
-    "Turn Tables",
-    "Saved items",
-    "Shopping cart",
-    "Hamburger menu",
+    <Logo />,
     "Search bar",
+    ShoppingCart,
+    Wishlist,
+    Hamburger,
 ];
 
 const Header = () => {
@@ -22,7 +27,13 @@ const Header = () => {
         <HeaderWrapper>
             <ul>
                 {headerItems.map((item, index) => (
-                    <li key={index}>{item}</li>
+                    <li key={index}>
+                        {typeof item === "string" && item.includes("svg") ? (
+                            <img src={item} alt={item} />
+                        ) : (
+                            item
+                        )}
+                    </li>
                 ))}
             </ul>
         </HeaderWrapper>

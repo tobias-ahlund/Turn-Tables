@@ -31,7 +31,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/products', function () {
     return Inertia::render('Products/Products');
-});
+})->name('products');
 
 Route::get('/products/{slug}', function ($slug) {
     return Inertia::render('Products/Product', [
