@@ -7,7 +7,6 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 
 export default function Product() {
     const [product, setProduct] = useState(null);
-    /* console.log(product); */
 
     const slug = "/" + location.pathname.split('/').slice(-1)[0];
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { fetchAllProducts, fetchAllCategories } from "@/turn-table-studio/utils/sanity.queries";
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { ProductsWrapper } from '../../Components/ProductsWrapper.style';
-import SearchBar from '@/Components/SearchBar';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 
 export default function Products() {
@@ -113,7 +112,7 @@ export default function Products() {
                 {!prodsByCat && !productSearch && <ProductsWrapper>
                     {products.map((product) => (
                         <div key={product._id}>
-                            <a href={`/products/${product.subcategory.category.title}/${product.subcategory.title}${product.slug.current}`}>
+                            <a href={`/products/${product.subcategory.category.title.toLowerCase()}/${product.subcategory.title.toLowerCase().replace(/\s+/g, '-')}${product.slug.current}`}>
                                 <img src={urlFor(product.image)} alt="Picture of the product." />
                                 <p>{product.title}</p>
                                 <p>{product.price} {product.currency}</p>
