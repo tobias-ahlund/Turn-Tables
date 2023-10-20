@@ -39,6 +39,8 @@ const Menu = () => {
         "Decoration"
     ]
 
+    const categoriesLowerCase = categories.map(category => category.toLowerCase());
+
     function handleToggleMenu() {
         setShowMenu(!showMenu);
     }
@@ -50,12 +52,12 @@ const Menu = () => {
             </button>
             {showMenu && <MenuWindow>
                 <ul>
-                    {categories.map((category, index) =>
+                    {categoriesLowerCase.map((category, index) =>
                         <li key={index}>
                             <Link
-                                href={route("products")}
+                                href={category !== "all products" ? route('products.category', { categorySlug: category }) : route('products')}
                             >
-                                {category}
+                                {categories[index]}
                             </Link>
                             <br />
                         </li>
