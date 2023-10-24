@@ -4,6 +4,7 @@ import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { ProductWrapper } from '@/Components/ProductWrapper.style';
 import StockStatus from '@/Components/StockStatus';
 import DefaultLayout from '@/Layouts/DefaultLayout';
+import { useShoppingCart } from 'use-shopping-cart';
 
 export default function Product() {
     const [product, setProduct] = useState(null);
@@ -17,6 +18,21 @@ export default function Product() {
             })
             .catch((error) => console.error('Error fetching product:', error));
         }, [slug]);
+
+    const { addItem } = useShoppingCart();
+
+    const handleAddToCart = () => {
+        if (product) {
+            addItem({
+                id: product.id,
+                name: product.title,
+                price: product.price,
+                currency: product.currency,
+                image: product.image,
+                quantity: 1,
+            });
+        };
+    };
 
     return (
         <>
@@ -37,6 +53,7 @@ export default function Product() {
                                 <p>{product.description}</p>
                                 <p>{product.price} {product.currency}</p>
                                 <StockStatus />
+                                <button onClick={handleAddToCart}>Add To Cart</button>
                             </div>
                         </>
                     )}

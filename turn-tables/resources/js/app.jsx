@@ -6,6 +6,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 import { GlobalStyle } from './Components/GlobalStyle';
+import { CartProvider } from 'use-shopping-cart';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -15,7 +16,7 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<><GlobalStyle /><App {...props} /></>);
+        root.render(<CartProvider mode="client-only"><><GlobalStyle /><App {...props} /></></CartProvider>);
     },
     progress: {
         color: '#4B5563',
