@@ -3,6 +3,8 @@ import { fetchAllProducts, fetchAllCategories } from "@/turn-table-studio/utils/
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { ProductsWrapper } from '../../Components/ProductsWrapper.style';
 import DefaultLayout from '@/Layouts/DefaultLayout';
+import ShoppingCart from '@/public/images/ShoppingCart.svg';
+import Wishlist from '@/public/images/Wishlist.svg';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -113,9 +115,21 @@ export default function Products() {
                     {products.map((product) => (
                         <div key={product._id}>
                             <a href={`/products/${product.subcategory.category.title.toLowerCase()}/${product.subcategory.title.toLowerCase().replace(/\s+/g, '-')}${product.slug.current}`}>
-                                <img src={urlFor(product.image)} alt="Picture of the product." />
-                                <p>{product.title}</p>
-                                <p>{product.price} {product.currency}</p>
+                                <div id="imagesWrapper">
+                                    <img src={urlFor(product.image)} alt="Picture of the product." />
+                                    <div>
+                                        <div>
+                                            <img src={ShoppingCart} alt="Shopping cart icon"/>
+                                        </div>
+                                        <div>
+                                            <img src={Wishlist} alt="Wishlist icon" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="prodInfoWrapper">
+                                    <p>{product.title}</p>
+                                    <p>{product.price}:-</p>
+                                </div>
                             </a>
                         </div>
                     ))}
