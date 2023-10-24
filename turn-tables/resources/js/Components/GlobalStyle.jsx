@@ -7,4 +7,8 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         line-height: 125%;
     }
+
+    main {
+        min-height: 90vh;
+    }
 `

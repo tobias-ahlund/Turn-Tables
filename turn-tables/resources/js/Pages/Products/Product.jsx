@@ -13,6 +13,15 @@ import Wishlist from '@/public/images/Wishlist.svg';
 export default function Product() {
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const [confirmCart, setConfirmCart] = useState("");
+
+    function cartAddedConfirmed() {
+        setConfirmCart(<span>&#10003; {quantity > 1 ? "Items" : "Item"} added to cart</span>)
+
+        setTimeout(() => {
+            setConfirmCart("")
+        }, 2000)
+    }
 
     const slug = "/" + location.pathname.split('/').slice(-1)[0];
 
@@ -45,6 +54,7 @@ export default function Product() {
                 image: product.image,
                 quantity: 1,
             });
+            cartAddedConfirmed();
         };
     };
 
@@ -85,7 +95,7 @@ export default function Product() {
                                         </button>
                                     </div>
                                     <div>
-                                        <button onClick={handleAddToCart}>Add to cart</button>
+                                        <button onClick={handleAddToCart}>{confirmCart ? confirmCart : "Add to cart"}</button>
                                     </div>
                                 </div>
                             </div>
