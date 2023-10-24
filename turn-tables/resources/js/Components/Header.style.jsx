@@ -4,6 +4,7 @@ import Menu from "@/Components/Menu.style";
 import ShoppingCart from "@/public/images/ShoppingCart.svg";
 import Logo from "./Logo";
 import SearchBar from "@/Components/SearchBar";
+import User from "@/public/images/User.svg";
 
 const HeaderWrapper = styled.header`
     background-color: lightgray;
@@ -19,6 +20,7 @@ const Header = ({ onSearch }) => {
     const headerItems = [
         <Logo />,
         <SearchBar onSearch={onSearch}/>,
+        User,
         ShoppingCart,
         Wishlist,
         <Menu />,
