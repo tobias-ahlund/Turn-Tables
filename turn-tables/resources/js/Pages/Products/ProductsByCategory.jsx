@@ -3,6 +3,7 @@ import { fetchCategory, fetchProductsBySlug } from '@/turn-table-studio/utils/sa
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { ProductsWrapper } from '@/Components/ProductsWrapper.style';
+import { BreadcrumbsWrapper } from '@/Components/Breadcrumbs.style';
 
 export default function ProductsByCategory() {
     const [products, setProducts] = useState([]);
@@ -28,9 +29,11 @@ export default function ProductsByCategory() {
     return (
         <>
             <DefaultLayout>
+                <BreadcrumbsWrapper>
                 <a href="/products"><span>Products</span></a>
                 <span> &gt; </span>
                 <span>{category && category.title}</span>
+                </BreadcrumbsWrapper>
                 <ProductsWrapper>
                     {products.map((product) => (
                     <div key={product._id}>

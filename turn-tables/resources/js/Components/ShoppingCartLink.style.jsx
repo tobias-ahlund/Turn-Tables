@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import ShoppingCart from "@/public/images/ShoppingCart.svg";
 import styled from 'styled-components';
+import { useShoppingCart } from 'use-shopping-cart';
 
 const CartWrapper = styled.div`
     position: relative;
@@ -29,6 +30,9 @@ const CartQuant = styled.div`
 `
 
 export default function ShoppingCartLink() {
+    
+    const { cartCount } = useShoppingCart();
+    
     return (
         <Link
             href={route('cart')}
@@ -36,7 +40,7 @@ export default function ShoppingCartLink() {
             <CartWrapper>
                 <img src={ShoppingCart} alt="Shopping cart icon" />
                 <CartQuant>
-                    <p>99</p>
+                    <p>{cartCount}</p>
                 </CartQuant>
             </CartWrapper>
         </Link>
