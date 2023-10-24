@@ -51,15 +51,13 @@ export default function Product() {
     return (
         <>
             <DefaultLayout>
-                <BreadcrumbsWrapper>
-                    <a href="/products"><span>Products</span></a>
-                    <span> &gt; </span>
-                    <span>{product && product.subcategory.category.title}</span>
-                    <span> &gt; </span>
-                    <span>{product && product.subcategory.title}</span>
-                    <span> &gt; </span>
-                    <span>{product && product.title}</span>
-                </BreadcrumbsWrapper>
+                <a href="/products"><span>Products</span></a>
+                <span> &gt; </span>
+                <a href={`/products${product && product.subcategory.category.slug.current}`}><span>{product && product.subcategory.category.title}</span></a>
+                <span> &gt; </span>
+                <span>{product && product.subcategory.title}</span>
+                <span> &gt; </span>
+                <span>{product && product.title}</span>
                 <ProductWrapper>
                     {product && (
                         <>

@@ -9,8 +9,10 @@ const getAllProducts = `*[_type == 'product'] {
   slug,
   subcategory->{
     title,
+    slug,
     category->{
       title,
+      slug,
     },
   },
 }`;
@@ -26,9 +28,11 @@ const getProductsBySlug = `*[_type == 'product' && category->slug.current == $sl
   slug,
   category->{
     title,
+    slug,
   },
   subcategory->{
     title,
+    slug,
   }
 }`;
 
@@ -42,8 +46,10 @@ const getProductBySlug = `*[_type == "product" && slug.current == $slug][0] {
   slug,
   subcategory->{
     title,
+    slug,
     category->{
       title,
+      slug,
     },
   },
 }`;
