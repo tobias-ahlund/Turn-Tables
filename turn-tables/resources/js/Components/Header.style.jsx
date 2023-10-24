@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import Wishlist from "@/public/images/Wishlist.svg";
 import Menu from "@/Components/Menu.style";
-import ShoppingCart from "@/public/images/ShoppingCart.svg";
+import ShoppingCartLink from "@/Components/ShoppingCartLink.style";
 import Logo from "./Logo";
 import SearchBar from "@/Components/SearchBar";
 import User from "@/public/images/User.svg";
+import WishlistLink from "@/Components/WishlistLink.style";
 
 const HeaderWrapper = styled.header`
     background-color: lightgray;
@@ -21,8 +22,8 @@ const Header = ({ onSearch }) => {
         <Logo />,
         <SearchBar onSearch={onSearch}/>,
         User,
-        ShoppingCart,
-        Wishlist,
+        <ShoppingCartLink />,
+        <WishlistLink />,
         <Menu />,
     ];
 
