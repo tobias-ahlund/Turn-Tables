@@ -8,12 +8,17 @@ export const ProductWrapper = styled.section`
     gap: 2rem;
 
     @media (min-width: 500px) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, auto);
         max-width: 800px;
+
+        & > div > div:last-of-type {
+            flex-grow: 1;
+        }
     }
 
     & > div:nth-of-type(1) {
         position: relative;
+        aspect-ratio: 1/1;
     }
 
     & div:first-child > div:last-of-type {
@@ -45,7 +50,6 @@ export const ProductWrapper = styled.section`
     & > div > div:last-of-type {
         display: flex;
         justify-content: flex-end;
-        flex-grow: 1;
         gap: 0.5rem;
         align-items: flex-end;
     }
@@ -57,6 +61,8 @@ export const ProductWrapper = styled.section`
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        max-height: 32px;
+        line-height: 100%;
     }
 
     & > div > div:last-of-type button, & > div > div:last-of-type span {
