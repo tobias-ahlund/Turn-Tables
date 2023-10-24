@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@sanity/image-url": "^1.0.2",
-        "styled-components": "^6.1.0"
+        "styled-components": "^6.1.0",
+        "use-shopping-cart": "^3.1.8"
     }
 }
