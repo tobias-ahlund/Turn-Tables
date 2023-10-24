@@ -6,12 +6,13 @@ import { Link } from '@inertiajs/react';
 const MenuWrapper = styled.div`
     display: flex;
     & button {
-        z-index: 100;
+        z-index: 101;
     }
 `
 
 const MenuWindow = styled.div`
     position: fixed;
+    z-index: 100;
     top: 0;
     left: 0;
     right: 0;
@@ -23,6 +24,7 @@ const MenuWindow = styled.div`
         font-size: 2rem;
         align-items: center;
         margin-top: 4rem;
+        line-height: 125%;
     }
     & ul li {
         padding: 0.5rem;
