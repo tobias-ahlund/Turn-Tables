@@ -39,7 +39,7 @@ export default function Product() {
             <DefaultLayout>
                 <a href="/products"><span>Products</span></a>
                 <span> &gt; </span>
-                <span>{product && product.subcategory.category.title}</span>
+                <a href={`/products${product && product.subcategory.category.slug.current}`}><span>{product && product.subcategory.category.title}</span></a>
                 <span> &gt; </span>
                 <span>{product && product.subcategory.title}</span>
                 <span> &gt; </span>
