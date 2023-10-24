@@ -38,7 +38,7 @@ export default function ProductsByCategory() {
                     {products.map((product) => (
                     <div key={product._id}>
                         {product && (
-                        <a href={`/products/${product.category.title.toLowerCase()}/${product.subcategory.title.toLowerCase()}${product.slug.current}`}>
+                        <a href={`/products${product.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
                             <img src={urlFor(product.image)} alt="Picture of the product." />
                             <p>{product.title}</p>
                             <p>{product.price} {product.currency}</p>
