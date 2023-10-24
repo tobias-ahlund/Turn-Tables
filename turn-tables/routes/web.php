@@ -29,6 +29,14 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/cart', function () {
+    return Inertia::render('Cart');
+});
+
+Route::get('/wishlist', function () {
+    return Inertia::render('Wishlist');
+});
+
 Route::get('/products', function () {
     return Inertia::render('Products/Products');
 })->name('products');
