@@ -86,7 +86,7 @@ export default function Products() {
                 <ProductsWrapper>
                     {productSearch && filteredProducts.map((product) => (
                         <div key={product._id}>
-                            <a href={`/products/${product.subcategory.category.title}/${product.subcategory.title}${product.slug.current}`}>
+                            <a href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
                                 <img src={urlFor(product.image)} alt="Picture of the product." />
                                 <p>{product.title}</p>
                                 <p>{product.price} {product.currency}</p>
@@ -99,7 +99,7 @@ export default function Products() {
                 {!productSearch && <ProductsWrapper>
                     {prodsByCat && prodsByCat.map((product) => (
                         <div key={product._id}>
-                            <a href={`/products/${product.subcategory.category.title}/${product.subcategory.title}${product.slug.current}`}>
+                            <a href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
                                 <img src={urlFor(product.image)} alt="Picture of the product." />
                                 <p>{product.title}</p>
                                 <p>{product.price} {product.currency}</p>
@@ -114,7 +114,7 @@ export default function Products() {
                 {!prodsByCat && !productSearch && <ProductsWrapper>
                     {products.map((product) => (
                         <div key={product._id}>
-                            <a href={`/products/${product.subcategory.category.title.toLowerCase()}/${product.subcategory.title.toLowerCase().replace(/\s+/g, '-')}${product.slug.current}`}>
+                            <a href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
                                 <div id="imagesWrapper">
                                     <img src={urlFor(product.image)} alt="Picture of the product." />
                                     <div>
