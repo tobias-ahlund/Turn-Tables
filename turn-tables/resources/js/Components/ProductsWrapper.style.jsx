@@ -44,6 +44,7 @@ export const ProductsWrapper = styled.section`
         bottom: 0;
         padding: 0.5rem;
         display: flex;
+        cursor: pointer;
     }
 
     #imagesWrapper > div > div {

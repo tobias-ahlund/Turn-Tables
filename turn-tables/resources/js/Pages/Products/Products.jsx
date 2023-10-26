@@ -5,12 +5,15 @@ import { ProductsWrapper } from '../../Components/ProductsWrapper.style';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import ShoppingCart from '@/public/images/ShoppingCart.svg';
 import Wishlist from '@/public/images/Wishlist.svg';
+import { AddToCart } from '@/Components/AddToCart';
+import Check from '@/public/images/Check.svg';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [productSearch, setProductSearch] = useState("")
     const [prodsByCat, setProdsByCat] = useState("");
+    const [confirmCart, setConfirmCart] = useState("");
 
     useEffect(() => {
         fetchAllProducts()
@@ -26,6 +29,14 @@ export default function Products() {
             })
             .catch((error) => console.error('Error fetching categories:', error));
     }, []);
+
+    function cartAddedConfirmed(productId) {
+        setConfirmCart(productId);
+
+        setTimeout(() => {
+            setConfirmCart(null)
+        }, 2000)
+    }
 
     function onSearch(searchQuery) {
         setProductSearch(searchQuery);
@@ -114,18 +125,30 @@ export default function Products() {
                 {!prodsByCat && !productSearch && <ProductsWrapper>
                     {products.map((product) => (
                         <div key={product._id}>
-                            <a href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
-                                <div id="imagesWrapper">
-                                    <img src={urlFor(product.image)} alt="Picture of the product." />
-                                    <div>
-                                        <div>
-                                            <img src={ShoppingCart} alt="Shopping cart icon"/>
-                                        </div>
-                                        <div>
-                                            <img src={Wishlist} alt="Wishlist icon" />
-                                        </div>
-                                    </div>
+                            <div id="imagesWrapper">
+                            <a 
+                                href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}
+                            >
+                                <img src={urlFor(product.image)} alt="Picture of the product." />
+                            </a>
+                            <div>
+                                <AddToCart
+                                    product={product}
+                                    cartAddedConfirmed={() => cartAddedConfirmed(product._id)}
+                                >
+                                    <img 
+                                        src={confirmCart === product._id ? Check : ShoppingCart} 
+                                        alt="Shopping cart icon"
+                                    />
+                                </AddToCart>
+                                <div>
+                                    <img src={Wishlist} alt="Wishlist icon" />
                                 </div>
+                            </div>
+                            </div>
+                            <a 
+                                href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}
+                            >
                                 <div id="prodInfoWrapper">
                                     <p>{product.title}</p>
                                     <p>{product.price}:-</p>
