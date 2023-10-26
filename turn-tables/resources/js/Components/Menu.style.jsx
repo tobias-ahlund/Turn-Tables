@@ -11,21 +11,38 @@ const MenuWrapper = styled.div`
 `
 
 const MenuWindow = styled.div`
-    position: fixed;
-    z-index: 100;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0.9);
+    & > div:last-of-type {
+        position: fixed;
+        z-index: 99;
+        right: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background-color: rgba(${props => props.open ? "0, 0, 0, 0.7" : "transparent"});
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    & > div:first-of-type {
+        z-index: 100;
+        background-color: white;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 400px;
+        transform: translateX(${props => (props.open ? "0" : "-100%")});
+        transition: transform 0.3s ease-in-out;
+    }
+
     & ul {
         display: flex;
         flex-direction: column;
         font-size: 2rem;
-        align-items: center;
+        align-items: flex-start;
         margin-top: 4rem;
         line-height: 125%;
     }
+
     & ul li {
         padding: 0.5rem;
     }
@@ -52,20 +69,23 @@ const Menu = () => {
             <button onClick={() => handleToggleMenu()}>
                 <img src={Hamburger} alt="Hamburger menu icon" />
             </button>
-            {showMenu && <MenuWindow>
-                <ul>
-                    {categoriesLowerCase.map((category, index) =>
-                        <li key={index}>
-                            <Link
-                                href={category !== "all products" ? route('products.category', { categorySlug: category }) : route('products')}
-                            >
-                                {categories[index]}
-                            </Link>
-                            <br />
-                        </li>
-                    )}
-                </ul>
-            </MenuWindow>}
+            <MenuWindow open={showMenu}>
+                <div>
+                    <ul>
+                        {categoriesLowerCase.map((category, index) =>
+                            <li key={index}>
+                                <Link
+                                    href={category !== "all products" ? route('products.category', { categorySlug: category }) : route('products')}
+                                >
+                                    {categories[index]}
+                                </Link>
+                                <br />
+                            </li>
+                        )}
+                    </ul>
+                </div>
+                <div></div>
+            </MenuWindow>
         </MenuWrapper>
     );
 }
