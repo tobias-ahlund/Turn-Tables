@@ -18,8 +18,10 @@ const MenuWindow = styled.div`
         top: 0;
         left: 0;
         bottom: 0;
-        background-color: rgba(${props => props.open ? "0, 0, 0, 0.7" : "transparent"});
-        transition: background-color 0.3s ease-in-out;
+        background-color: black;
+        transition: all .3s ease-in-out;
+        opacity: ${props => props.open ? ".6" : "0"};
+        pointer-events: ${props => props.open ? "all" : "none"};
     }
 
     & > div:first-of-type {
@@ -31,7 +33,7 @@ const MenuWindow = styled.div`
         bottom: 0;
         width: 400px;
         transform: translateX(${props => (props.open ? "0" : "-100%")});
-        transition: transform 0.3s ease-in-out;
+        transition: transform .3s ease-in-out;
     }
 
     & ul {
