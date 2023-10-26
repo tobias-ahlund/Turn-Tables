@@ -21,6 +21,8 @@ export default function Cart() {
             <div key={item.id}>
                 <p>{item.name}</p>
                 <p>Price: {item.price} SEK</p>
+                <p>Total price: {item.value} SEK</p>
+                <p>Quantity: {item.quantity}</p>
                 <img src={urlFor(item.image)} alt="Image of the product." />
                 <button onClick={() => handleRemoveItem(item)}>Remove from Cart</button>
             </div>

@@ -52,7 +52,9 @@ export default function Product() {
                 price: product.price,
                 currency: product.currency,
                 image: product.image,
-                quantity: 1,
+            },
+            {
+                count: quantity
             });
             cartAddedConfirmed();
         };
