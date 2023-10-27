@@ -7,8 +7,8 @@ export const ProductWrapper = styled.section`
     grid-template-rows: repeat(2, 1fr);
     gap: 2rem;
 
-    @media (min-width: 500px) {
-        grid-template-columns: repeat(2, auto);
+    @media (min-width: 650px) {
+        grid-template-columns: repeat(2, 1fr);
         max-width: 800px;
 
         & > div > div:last-of-type {
@@ -71,8 +71,8 @@ export const ProductWrapper = styled.section`
     }
 
     & > div > div:last-of-type img {
-        width: 0.75rem;
-        height: 0.75rem;
+        width: 1rem;
+        height: 1rem;
     }
 
     & > div:last-of-type > p:nth-of-type(1) {

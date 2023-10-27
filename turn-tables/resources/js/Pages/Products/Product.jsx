@@ -10,13 +10,24 @@ import Increment from '@/public/images/Increment.svg';
 import Decrement from '@/public/images/Decrement.svg';
 import Wishlist from '@/public/images/Wishlist.svg';
 
+import styled from 'styled-components';
+
+const Test = styled.span`
+    width: 2ch;
+    text-align: center;
+`;
+
+const Added = styled.button`
+    min-width: 3.86rem;
+`;
+
 export default function Product() {
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [confirmCart, setConfirmCart] = useState("");
 
     function cartAddedConfirmed() {
-        setConfirmCart(<span>&#10003; {quantity > 1 ? "Items" : "Item"} added to cart</span>)
+        setConfirmCart(<span>&#10003; Added</span>)
 
         setTimeout(() => {
             setConfirmCart("")
@@ -47,7 +58,7 @@ export default function Product() {
     const handleAddToCart = () => {
         if (product) {
             addItem({
-                id: product.id,
+                id: product._id,
                 name: product.title,
                 price: product.price,
                 currency: product.currency,
@@ -91,13 +102,13 @@ export default function Product() {
                                         <button onClick={() => {handleDecrement()}}>
                                             <img src={Decrement} alt="Decrement icon" />
                                         </button>
-                                        <span>{quantity}</span>
+                                        <Test>{quantity}</Test>
                                         <button onClick={() => {handleIncrement()}}>
                                             <img src={Increment} alt="Increment icon" />
                                         </button>
                                     </div>
                                     <div>
-                                        <button onClick={handleAddToCart}>{confirmCart ? confirmCart : "Add to cart"}</button>
+                                        <Added onClick={handleAddToCart}>{confirmCart ? confirmCart : "Add to cart"}</Added>
                                     </div>
                                 </div>
                             </div>
