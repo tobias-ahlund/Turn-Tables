@@ -49,6 +49,12 @@ Route::get('/products/{categorySlug}/{subCategorySlug}/{productSlug}', function 
     ]);
 });
 
+Route::get('/search/{searchQuerySlug}', function($searchQuerySlug) {
+    return Inertia::render('Search', [
+        'searchQuerySlug' => $searchQuerySlug,
+    ]);
+})->name('search');
+
 Route::get('/products/{categorySlug}', function ($categorySlug) {
     return Inertia::render('Products/ProductsByCategory', [
         'categorySlug' => $categorySlug,

@@ -17,10 +17,10 @@ const HeaderWrapper = styled.header`
     }
 `
 
-const Header = ({ onSearch }) => {
+const Header = () => {
     const headerItems = [
         <Logo />,
-        <SearchBar onSearch={onSearch}/>,
+        <SearchBar />,
         User,
         <ShoppingCartLink />,
         <WishlistLink />,

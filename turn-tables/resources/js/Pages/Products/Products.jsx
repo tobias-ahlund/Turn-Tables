@@ -11,7 +11,6 @@ import Check from '@/public/images/Check.svg';
 export default function Products() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [productSearch, setProductSearch] = useState("")
     const [prodsByCat, setProdsByCat] = useState("");
     const [confirmCart, setConfirmCart] = useState("");
 
@@ -38,28 +37,18 @@ export default function Products() {
         }, 2000)
     }
 
-    function onSearch(searchQuery) {
-        setProductSearch(searchQuery);
-    }
-
-    const filteredProducts = products.filter((product) =>
-        product.title.toLowerCase().indexOf(productSearch.toLowerCase()) !== -1
-    );
-
     function fetchProdByCat(category) {
         fetchAllProducts()
             .then((data) => {
                 if (category === "All products") {
                     setProducts(data);
                     setProdsByCat("");
-                    setProductSearch("");
                     return;
                 }
                 const filteredData = data.filter((product) =>
                     product.subcategory.category.title === category
                 )
                 setProdsByCat(filteredData);
-                setProductSearch("");
             })
             .catch((error) => console.error('Error fetching products:', error));
     }
@@ -73,17 +62,7 @@ export default function Products() {
 
     return (
         <>
-            <DefaultLayout onSearch={onSearch}>
-                {productSearch && filteredProducts.length !== 0 && (
-                    <>
-                        <h2>Showing results for "{productSearch}"</h2>
-                        <p>We found {filteredProducts.length} products.</p>
-                    </>
-                )}
-                {productSearch && filteredProducts.length === 0 && <h2>No results for "{productSearch}"</h2>}
-                
-                <br />
-                <br />
+            <DefaultLayout>
                 {categories.map((category) =>
                     <div key={category._id}>
                         <a href={`/products${category.slug.current}`}>
@@ -92,22 +71,9 @@ export default function Products() {
                         <br />
                     </div>
                 )}
-                
-                {/* Search result products */}
-                <ProductsWrapper>
-                    {productSearch && filteredProducts.map((product) => (
-                        <div key={product._id}>
-                            <a href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
-                                <img src={urlFor(product.image)} alt="Picture of the product." />
-                                <p>{product.title}</p>
-                                <p>{product.price} {product.currency}</p>
-                            </a>
-                        </div>
-                    ))}
-                </ProductsWrapper>
                     
                 {/* Filtered products by category */}
-                {!productSearch && <ProductsWrapper>
+                <ProductsWrapper>
                     {prodsByCat && prodsByCat.map((product) => (
                         <div key={product._id}>
                             <a href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
@@ -117,12 +83,10 @@ export default function Products() {
                             </a>
                         </div>
                     ))}
-                </ProductsWrapper>}
-
-                {productSearch && <hr />}
+                </ProductsWrapper>
                 
                 {/* All products */}
-                {!prodsByCat && !productSearch && <ProductsWrapper>
+                {!prodsByCat && <ProductsWrapper>
                     {products.map((product) => (
                         <div key={product._id}>
                             <div id="imagesWrapper">
