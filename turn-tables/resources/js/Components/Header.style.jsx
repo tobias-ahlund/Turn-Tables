@@ -9,10 +9,36 @@ import WishlistLink from "@/Components/WishlistLink.style";
 const HeaderWrapper = styled.header`
     background-color: lightgray;
     padding: 2rem;
+
     & #headerListItems {
         display: flex;
-        justify-content: space-around;
         align-items: center;
+        justify-content: center;
+    }
+
+    & #headerListItems li {
+        flex-shrink: 0;
+    }
+
+    & #headerListItems li:nth-of-type(2) {
+        flex: 1 1 auto;
+    }
+
+    @media (max-width: 800px) {
+        & #headerListItems {
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        & #headerListItems li:nth-of-type(2) {
+            order: 6;
+            min-width: 100%;
+        }
+
+        & #headerListItems li:nth-of-type(1) {
+            flex-grow: 1;
+        }
     }
 `
 
