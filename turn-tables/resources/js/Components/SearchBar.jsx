@@ -42,8 +42,10 @@ export default function SearchBar() {
 
     return (
         <SearchBarWrapper>
+            <label htmlFor="search" hidden />
             <input 
                 type="text"
+                id="search"
                 placeholder="Search for products"
                 value={searchQuery}
                 onChange={(e) => 

@@ -3,23 +3,18 @@ import styled, { useTheme } from "styled-components";
 import { useState } from "react";
 import { Link } from '@inertiajs/react';
 import Close from '@/public/images/Close.svg';
+import Logo from "@/components/Logo";
 
 const MenuWrapper = styled.div`
     display: flex;
-    position: relative;
 
     & button {
-        z-index: 101;
+        z-index: ${props => props.open ? "0" : "101"};
     }
 `
 
 const CloseButtonWrapper = styled.div`
-    display: flex;
     cursor: pointer;
-    position: absolute;
-    margin: 2rem;
-    top: 0;
-    right: 0;
 
     img {
         margin: auto;
@@ -27,7 +22,28 @@ const CloseButtonWrapper = styled.div`
     }
 `;
 
+const LogoCloseButtonWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0 1rem 0;
+    border-bottom: 1px solid black;
+    margin: 0 2rem;
+
+    & div {
+        display: flex;
+        align-items: center;
+    }
+`;
+
 const MenuWindow = styled.div`
+    & > div > div:nth-of-type(2) {
+        color: red;
+        display: inline-block;
+        margin: 2rem 0 0 2rem;
+        display: flex;
+    }
+
     & > div:last-of-type {
         position: fixed;
         z-index: 99;
@@ -54,27 +70,62 @@ const MenuWindow = styled.div`
         transition: transform .3s ease-in-out;
     }
 
+    @media (max-width: 400px) {
+        & > div:first-of-type {
+            width: 100%;
+            border: none;
+        }
+
+        & > div:last-of-type, & button {
+            display: none;
+        }
+    }
+
     & ul {
         display: flex;
         flex-direction: column;
         font-size: 1.5rem;
         align-items: flex-start;
-        margin-top: 4rem;
+        margin-top: 1rem;
         line-height: 125%;
         gap: 1rem;
         padding: 0 2rem;
     }
 
+    & ul li {
+        position: relative;
+        color: #000;
+        text-decoration: none;
+    }
+
     & ul li:hover {
-        text-decoration: underline;
+        color: #000;
+    }
+
+    & ul li::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 1.5px;
+        bottom: 0;
+        left: 0;
+        background-color: #000;
+        transform: scaleX(0);
+        transition: transform .2s ease-out;
+        transform-origin: bottom left;
+    }
+
+    & ul li:hover::before {
+        transform: scaleX(1);
+    }
+
+    & ul li:not(:hover)::before {
+        transition: none;
     }
 
     & ul li:first-child {
         font-weight: bold;
-    }
-
-    & ul li:hover {
-
     }
 `
 
@@ -95,15 +146,18 @@ const Menu = () => {
     }
 
     return (
-        <MenuWrapper>
+        <MenuWrapper open={showMenu}>
             <button onClick={() => handleToggleMenu()}>
                 <img src={Hamburger} alt="Hamburger menu icon" />
             </button>
             <MenuWindow open={showMenu}>
                 <div>
-                    <CloseButtonWrapper onClick={() => handleToggleMenu()}>
-                        <img src={Close} alt="close button" />
-                    </CloseButtonWrapper>
+                    <LogoCloseButtonWrapper>
+                        <Logo />
+                        <CloseButtonWrapper onClick={() => handleToggleMenu()}>
+                            <img src={Close} alt="close button" />
+                        </CloseButtonWrapper>
+                    </LogoCloseButtonWrapper>
                     <ul>
                         {categoriesLowerCase.map((category, index) =>
                             <li key={index}>
@@ -117,7 +171,7 @@ const Menu = () => {
                         )}
                     </ul>
                 </div>
-                <div></div>
+                <div onClick={() => handleToggleMenu()}></div>
             </MenuWindow>
         </MenuWrapper>
     );

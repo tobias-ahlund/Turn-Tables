@@ -40,7 +40,7 @@ const HeaderWrapper = styled.header`
             gap: 1rem;
         }
 
-        & #headerListItems li:nth-of-type(2) {
+        & #headerListItems > li:nth-of-type(2) {
             order: 6;
             min-width: 100%;
         }

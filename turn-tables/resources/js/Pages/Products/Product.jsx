@@ -46,7 +46,7 @@ export default function Product() {
 
     function handleDecrement() {
         setQuantity(prevQuantity => prevQuantity - 1)
-        quantity <= 0 && setQuantity(0);
+        quantity == 1 && setQuantity(1);
     }
 
     function handleIncrement() {
