@@ -14,6 +14,8 @@ const HeaderWrapper = styled.header`
         display: flex;
         align-items: center;
         justify-content: center;
+        max-width: 1600px;
+        margin: 0 auto;
     }
 
     & #headerListItems li {
