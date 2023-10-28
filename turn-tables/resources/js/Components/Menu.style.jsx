@@ -2,13 +2,30 @@ import Hamburger from "@/public/images/Hamburger.svg";
 import styled, { useTheme } from "styled-components";
 import { useState } from "react";
 import { Link } from '@inertiajs/react';
+import Close from '@/public/images/Close.svg';
 
 const MenuWrapper = styled.div`
     display: flex;
+    position: relative;
+
     & button {
         z-index: 101;
     }
 `
+
+const CloseButtonWrapper = styled.div`
+    display: flex;
+    cursor: pointer;
+    position: absolute;
+    margin: 2rem;
+    top: 0;
+    right: 0;
+
+    img {
+        margin: auto;
+        transform: rotate(45deg);
+    }
+`;
 
 const MenuWindow = styled.div`
     & > div:last-of-type {
@@ -26,7 +43,8 @@ const MenuWindow = styled.div`
 
     & > div:first-of-type {
         z-index: 100;
-        background-color: white;
+        background-color: #f0f0f0;
+        border-right: 1px solid lightgray;
         position: fixed;
         left: 0;
         top: 0;
@@ -39,14 +57,24 @@ const MenuWindow = styled.div`
     & ul {
         display: flex;
         flex-direction: column;
-        font-size: 2rem;
+        font-size: 1.5rem;
         align-items: flex-start;
         margin-top: 4rem;
         line-height: 125%;
+        gap: 1rem;
+        padding: 0 2rem;
     }
 
-    & ul li {
-        padding: 0.5rem;
+    & ul li:hover {
+        text-decoration: underline;
+    }
+
+    & ul li:first-child {
+        font-weight: bold;
+    }
+
+    & ul li:hover {
+
     }
 `
 
@@ -73,6 +101,9 @@ const Menu = () => {
             </button>
             <MenuWindow open={showMenu}>
                 <div>
+                    <CloseButtonWrapper onClick={() => handleToggleMenu()}>
+                        <img src={Close} alt="close button" />
+                    </CloseButtonWrapper>
                     <ul>
                         {categoriesLowerCase.map((category, index) =>
                             <li key={index}>

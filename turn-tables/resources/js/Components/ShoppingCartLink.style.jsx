@@ -11,15 +11,14 @@ const CartQuant = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    background-color: orange;
+    background-color: #2d6fa5;
     padding: 0.55rem;
     height: 1rem;
     width: 1rem;
     display: flex;
     border-radius: 100%;
     justify-content: center;
-    transform: translate(25%, -25%);
-    border: 1px solid white;
+    transform: translate(35%, -35%);
 
     & > p {
         color: white;
@@ -39,9 +38,9 @@ export default function ShoppingCartLink() {
         >
             <CartWrapper>
                 <img src={ShoppingCart} alt="Shopping cart icon" />
-                <CartQuant>
+                {cartCount > 0 && <CartQuant>
                     <p>{cartCount}</p>
-                </CartQuant>
+                </CartQuant>}
             </CartWrapper>
         </Link>
     );

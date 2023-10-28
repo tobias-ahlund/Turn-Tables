@@ -1,17 +1,25 @@
 import styled from "styled-components";
 
 const FooterWrapper = styled.footer`
-    background-color: lightgray;
-    padding: 2rem;
+    padding: 4rem 2rem;
+    background-color: #f0f0f0;
+    border-top: 1px solid lightgray;
+
     & ul {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
-        justify-content: center;
+        justify-content: flex-start;
+        gap: 1rem;
+        max-width: 1600px;
+        margin: 0 auto;
+
         @media (min-width: 450px) {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, auto);
+            column-gap: 5rem;
         }
+
         @media (min-width: 800px) {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, auto);
         }
     }
 `

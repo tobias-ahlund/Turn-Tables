@@ -7,8 +7,9 @@ import User from "@/public/images/User.svg";
 import WishlistLink from "@/Components/WishlistLink.style";
 
 const HeaderWrapper = styled.header`
-    background-color: lightgray;
+    background-color: #f0f0f0;
     padding: 2rem;
+    border-bottom: 1px solid lightgray;
 
     & #headerListItems {
         display: flex;
@@ -16,10 +17,16 @@ const HeaderWrapper = styled.header`
         justify-content: center;
         max-width: 1600px;
         margin: 0 auto;
+        gap: 1rem;
     }
 
     & #headerListItems li {
         flex-shrink: 0;
+    }
+
+    & #headerListItems li img {
+        width: 1.5rem;
+        height: 1.5rem;
     }
 
     & #headerListItems li:nth-of-type(2) {
