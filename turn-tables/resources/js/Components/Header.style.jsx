@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Wishlist from "@/public/images/Wishlist.svg";
 import Menu from "@/Components/Menu.style";
 import ShoppingCartLink from "@/Components/ShoppingCartLink.style";
 import Logo from "./Logo";

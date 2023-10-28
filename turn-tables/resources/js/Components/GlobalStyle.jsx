@@ -8,7 +8,22 @@ export const GlobalStyle = createGlobalStyle`
         line-height: 125%;
     }
 
+    h1 {
+        padding: 2rem 0 1rem 0;
+        font-size: 3rem;
+        line-height: 100%;
+        border-bottom: 1px solid black;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        line-height: 100%;
+    }
+
     main {
         min-height: 90vh;
+        width: calc(100% - 4rem);
+        margin: 0 auto;
+        max-width: 1600px;
     }
 `

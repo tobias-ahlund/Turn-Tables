@@ -7,6 +7,7 @@ import ShoppingCart from '@/public/images/ShoppingCart.svg';
 import Wishlist from '@/public/images/Wishlist.svg';
 import { AddToCart } from '@/Components/AddToCart';
 import Check from '@/public/images/Check.svg';
+import { CategoriesWrapper } from '@/Components/CategoriesWrapper.style';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -63,18 +64,18 @@ export default function Products() {
     return (
         <>
             <DefaultLayout>
-                {categories.map((category) =>
+                {/* {categories.map((category) =>
                     <div key={category._id}>
                         <a href={`/products${category.slug.current}`}>
                         <button onClick={() => fetchProdByCat(category.title)}>{category.title}</button>
                         </a>
                         <br />
                     </div>
-                )}
+                )} */}
                     
                 {/* Filtered products by category */}
-                <ProductsWrapper>
-                    {prodsByCat && prodsByCat.map((product) => (
+                {prodsByCat && <ProductsWrapper>
+                    {prodsByCat.map((product) => (
                         <div key={product._id}>
                             <a href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
                                 <img src={urlFor(product.image)} alt="Picture of the product." />
@@ -83,9 +84,20 @@ export default function Products() {
                             </a>
                         </div>
                     ))}
-                </ProductsWrapper>
+                </ProductsWrapper>}
                 
                 {/* All products */}
+                <h1>All products</h1>
+                <CategoriesWrapper>
+                    <h2>Shop by category</h2>
+                    {categories.map((category) =>
+                        <div key={category._id}>
+                            <a href={`/products${category.slug.current}`}>
+                                <button onClick={() => fetchProdByCat(category.title)}>{category.title}</button>
+                            </a>
+                        </div>
+                    )}
+                </CategoriesWrapper>
                 {!prodsByCat && <ProductsWrapper>
                     {products.map((product) => (
                         <div key={product._id}>

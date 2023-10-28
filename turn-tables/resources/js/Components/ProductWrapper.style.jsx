@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 export const ProductWrapper = styled.section`
-    width: calc(100% - 4rem);
     margin: 2rem auto;
     display: grid;
     grid-template-rows: repeat(2, 1fr);

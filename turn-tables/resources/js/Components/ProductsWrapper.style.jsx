@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
 export const ProductsWrapper = styled.section`
-    width: calc(100% - 4rem);
-    margin: 2rem auto;
+    margin: 0 auto 2rem;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
+    max-width: 1600px;
 
     @media (min-width: 500px) {
         grid-template-columns: repeat(2, 1fr);
@@ -15,7 +15,6 @@ export const ProductsWrapper = styled.section`
     }
     @media (min-width: 1600px) {
         grid-template-columns: repeat(4, 1fr);
-        max-width: 1600px;
     }
 
     #prodInfoWrapper {
@@ -24,6 +23,7 @@ export const ProductsWrapper = styled.section`
         padding: 0.5rem 0.5rem 0 0.5rem;
         align-items: center;
     }
+
     #prodInfoWrapper p:first-of-type {
         font-size: 1.25rem;
         padding-bottom: 0.5rem;
@@ -64,5 +64,18 @@ export const ProductsWrapper = styled.section`
         width: 1.5rem;
         height: 1.5rem;
         margin: auto;
+    }
+
+    #imagesWrapper a > img {
+        transition: transform .5s ease-in-out;
+    }
+
+    a {
+        overflow: hidden;
+        display: block;
+    }
+
+    a > img:hover {
+        transform: scale(1.1);
     }
 `
