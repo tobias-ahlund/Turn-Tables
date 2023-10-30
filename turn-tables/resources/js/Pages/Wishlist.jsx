@@ -8,8 +8,26 @@ export default function Wishlist({ productIds }) {
 
     const [products, setProducts] = useState(null);
 
+    const newArray = productIds.map((item, index) => {
+        if (index === productIds.length - 1) {
+            return item + '"';
+        }
+        else if (index === (productIds.length - productIds.length)) {
+            console.log(index);
+                return '"' + item + '" || _id == "';
+            }
+        else {
+            return item + '" || _id == "';
+        }
+    })
+
+    const newString = newArray.join('');
+
+    console.log(newString);
+
+
     useEffect(() => {
-        fetchWishlist(productIds)
+        fetchWishlist(newString)
             .then((data) => {
                 setProducts(data);
             })
