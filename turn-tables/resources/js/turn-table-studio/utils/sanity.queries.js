@@ -73,7 +73,7 @@ const getCategory = `*[_type == 'category' && title == $title] {
   }
 }[0]`;
 
-const getWishlist = `*[_type == 'product' && _id == $id]
+const getWishlist = `*[_type == 'product' && (_id in $ids)]
 {
   _id,
   title,
@@ -96,8 +96,8 @@ const fetchAllProducts = () => client.fetch(getAllProducts);
 
 const fetchAllCategories = () => client.fetch(getAllCategories);
 
-const fetchWishlist = (id) => {
-  return client.fetch(getWishlist, { id });
+const fetchWishlist = (ids) => {
+  return client.fetch(getWishlist, { ids });
 };
 
 const fetchCategory = (title) => {
