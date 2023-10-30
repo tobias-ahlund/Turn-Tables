@@ -8,6 +8,7 @@ import Wishlist from '@/public/images/Wishlist.svg';
 import { AddToCart } from '@/Components/AddToCart';
 import Check from '@/public/images/Check.svg';
 import { CategoriesWrapper } from '@/Components/CategoriesWrapper.style';
+import axios from 'axios';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -53,6 +54,34 @@ export default function Products() {
             })
             .catch((error) => console.error('Error fetching products:', error));
     }
+
+    const csrfToken = window.csrfToken;
+
+    function addToWishlist(productId) {
+    
+        const data = {
+            product_id: productId,
+        };
+    
+        axios
+            .post(route('wishlist.add'), data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log("Success!");
+                } else {
+                    console.error('Error adding product to wishlist');
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    
 
     // const categories = [
     //     "All products",
@@ -118,7 +147,7 @@ export default function Products() {
                                     />
                                 </AddToCart>
                                 <div>
-                                    <img src={Wishlist} alt="Wishlist icon" />
+                                    <img onClick={() => {addToWishlist(product._id)}} src={Wishlist} alt="Wishlist icon" />
                                 </div>
                             </div>
                             </div>

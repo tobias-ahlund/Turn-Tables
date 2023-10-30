@@ -67,4 +67,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/wishlist/add', 'App\Http\Controllers\WishlistController@addToWishlist')->name('wishlist.add');
+
 require __DIR__ . '/auth.php';
