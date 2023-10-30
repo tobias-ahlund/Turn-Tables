@@ -1,20 +1,43 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
+import product from '@/turn-table-studio/schemas/product';
+import { fetchWishlist } from '@/turn-table-studio/utils/sanity.queries';
+import { useEffect, useState } from 'react';
 
-export default function Wishlist({ auth, productId }) {
+
+export default function Wishlist({ productIds }) {
+
+    const [products, setProducts] = useState(null);
+
+    useEffect(() => {
+        fetchWishlist(productIds)
+            .then((data) => {
+                setProducts(data);
+            })
+            .catch((error) => console.error('Error fetching product:', error));
+        }, []);
+
+        console.log(products);
+
     return (
         <>
             <DefaultLayout>
-                {auth.user ? (
                     <>
                         <p>Hello</p>
-                        <p>Product ID: {productId}</p> {/* Display the product ID */}
-                    </>
-                ) : (
-                    <>
-                        <p>You are not logged in</p>
-                    </>
-                )}
+
+                        {products ? (
+                            <>
+                                <h2>Products in Wishlist:</h2>
+                                <ul>
+                                    {products.map((product) => (
+                                        <li key={product._id}>{product.title}</li>
+                                    ))}
+                                </ul>
+                            </>
+                        ) : (
+                            <p>No products in your wishlist</p>
+                        )}
+                    </> 
             </DefaultLayout>
         </>
     );
-};
+}

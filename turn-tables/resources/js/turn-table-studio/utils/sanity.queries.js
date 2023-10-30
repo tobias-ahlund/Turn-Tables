@@ -71,11 +71,34 @@ const getCategory = `*[_type == 'category' && title == $title] {
     title,
     slug
   }
-}[0]`;;
+}[0]`;
+
+const getWishlist = `*[_type == 'product' && _id == $id]
+{
+  _id,
+  title,
+  image,
+  description,
+  price,
+  currency,
+  slug,
+  category->{
+    title,
+    slug,
+  },
+  subcategory->{
+    title,
+    slug,
+  }
+}`
 
 const fetchAllProducts = () => client.fetch(getAllProducts);
 
 const fetchAllCategories = () => client.fetch(getAllCategories);
+
+const fetchWishlist = (id) => {
+  return client.fetch(getWishlist, { id });
+};
 
 const fetchCategory = (title) => {
   return client.fetch(getCategory, { title });
@@ -89,4 +112,4 @@ const fetchProductsBySlug = (slug) => {
   return client.fetch(getProductsBySlug, { slug });
 };
 
-export { fetchAllProducts, fetchProductBySlug, fetchProductsBySlug, fetchAllCategories, fetchCategory };
+export { fetchAllProducts, fetchProductBySlug, fetchProductsBySlug, fetchAllCategories, fetchCategory, fetchWishlist };
