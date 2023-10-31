@@ -41,7 +41,7 @@ Route::get('/wishlist', 'App\Http\Controllers\WishlistController@show')->middlew
 
 Route::get('/products', function () {
     return Inertia::render('Products/Products');
-})->name('products');
+})->middleware('wishlist')->name('products');
 
 Route::get('/products/{categorySlug}/{subCategorySlug}/{productSlug}', function ($categorySlug, $subCategorySlug, $productSlug) {
     return Inertia::render('Products/Product', [
@@ -70,5 +70,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/wishlist/add', 'App\Http\Controllers\WishlistController@addToWishlist')->name('wishlist.add');
+
+Route::post('/wishlist/remove', 'App\Http\Controllers\WishlistController@removeFromWishlist')->name('wishlist.remove');
 
 require __DIR__ . '/auth.php';

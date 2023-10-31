@@ -33,4 +33,15 @@ class WishlistController extends Controller
             'product_id' => $productId
         ]);
     }
+
+    public function removeFromWishlist(Request $request)
+    {
+        $user = $request->user();
+
+        $productId = $request->input('product_id');
+
+        Wishlist::where('user_id', $user->id)
+            ->where('product_id', $productId)
+            ->delete();
+    }
 }

@@ -5,12 +5,13 @@ import { ProductsWrapper } from '../../Components/ProductsWrapper.style';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import ShoppingCart from '@/public/images/ShoppingCart.svg';
 import Wishlist from '@/public/images/Wishlist.svg';
+import WishlistAdded from '@/public/images/WishlistAdded.svg';
 import { AddToCart } from '@/Components/AddToCart';
+import { AddToWishlist } from '@/Components/AddToWishlist';
 import Check from '@/public/images/Check.svg';
 import { CategoriesWrapper } from '@/Components/CategoriesWrapper.style';
-import axios from 'axios';
 
-export default function Products() {
+export default function Products({ wishlistItems }) {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [prodsByCat, setProdsByCat] = useState("");
@@ -54,41 +55,6 @@ export default function Products() {
             })
             .catch((error) => console.error('Error fetching products:', error));
     }
-
-    const csrfToken = window.csrfToken;
-
-    function addToWishlist(productId) {
-    
-        const data = {
-            product_id: productId,
-        };
-    
-        axios
-            .post(route('wishlist.add'), data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
-                },
-            })
-            .then((response) => {
-                if (response.status === 200) {
-                    console.log("Success!");
-                } else {
-                    console.error('Error adding product to wishlist');
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-    
-
-    // const categories = [
-    //     "All products",
-    //     "Furniture",
-    //     "Lighting",
-    //     "Decoration"
-    // ]
 
     return (
         <>
@@ -141,14 +107,20 @@ export default function Products() {
                                     product={product}
                                     cartAddedConfirmed={() => cartAddedConfirmed(product._id)}
                                 >
-                                    <img 
+                                    <img
                                         src={confirmCart === product._id ? Check : ShoppingCart} 
                                         alt="Shopping cart icon"
                                     />
                                 </AddToCart>
-                                <div>
-                                    <img onClick={() => {addToWishlist(product._id)}} src={Wishlist} alt="Wishlist icon" />
-                                </div>
+                                <AddToWishlist
+                                    productId={product._id}
+                                    isWishlistItem={wishlistItems.includes(product._id)}
+                                >
+                                    <img 
+                                        src={wishlistItems.includes(product._id) ? WishlistAdded : Wishlist}  
+                                        alt="Wishlist icon." />
+                                </AddToWishlist>
+
                             </div>
                             </div>
                             <a 
