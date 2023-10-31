@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import axios from 'axios';
+import { usePage } from '@inertiajs/react'
 
 const AddToWishlistWrapper = styled.div`
     width: 100%;
@@ -8,6 +9,9 @@ const AddToWishlistWrapper = styled.div`
 `;
 
 export const AddToWishlist = ({ children, productId, isWishlistItem }) => {
+
+    const { auth } = usePage().props
+
     const [inWishlist, setInWishlist] = useState(isWishlistItem);
     const csrfToken = window.csrfToken;
 
@@ -19,6 +23,11 @@ export const AddToWishlist = ({ children, productId, isWishlistItem }) => {
         const data = {
             product_id: productId,
         };
+
+        if (!auth.user) {
+            window.location.href = '/login';
+            return;
+        }
 
         if (inWishlist) {
             axios

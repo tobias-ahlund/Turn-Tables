@@ -20,6 +20,8 @@ class WishlistMiddleware
         if (auth()->check()) {
             $wishlistItems = Wishlist::where('user_id', auth()->user()->id)->pluck('product_id')->toArray();
             Inertia::share('wishlistItems', $wishlistItems);
+        } else {
+            Inertia::share('wishlistItems', []);
         }
         return $next($request);
     }

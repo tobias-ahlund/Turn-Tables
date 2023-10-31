@@ -1,5 +1,4 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import product from '@/turn-table-studio/schemas/product';
 import { fetchWishlist } from '@/turn-table-studio/utils/sanity.queries';
 import { useEffect, useState } from 'react';
 
