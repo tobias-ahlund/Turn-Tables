@@ -33,7 +33,7 @@ const SortButtonDropdown = styled.div`
     position: absolute;
     background-color: white;
     border: 1px solid lightgray;
-    padding: 1rem;
+    padding: 1.5rem;
     bottom: -.2rem;
     left: 0;
     transform: translate(0, 100%);
@@ -48,7 +48,7 @@ const SortButtonDropdownUl = styled.ul`
 
 const SortButtonDropdownLi = styled.li`
     margin-bottom: 1rem;
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
 
