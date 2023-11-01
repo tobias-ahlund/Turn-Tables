@@ -29,6 +29,15 @@ const SortButtonButton = styled.button`
     line-height: 100%;
 `;
 
+const ClickConfirmed = styled.div`
+    width: 1rem;
+    height: 1rem;
+    border-color: black;
+    border-radius: 100px;
+    border: ${props =>
+    props.$confirmSort ? "6px solid black" : "1px solid black"};
+`;
+
 const SortButtonDropdown = styled.div`
     position: absolute;
     background-color: white;
@@ -40,6 +49,7 @@ const SortButtonDropdown = styled.div`
     z-index: 10;
     border-radius: .75rem;
     cursor: default;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 const SortButtonDropdownUl = styled.ul`
@@ -49,8 +59,11 @@ const SortButtonDropdownUl = styled.ul`
 const SortButtonDropdownLi = styled.li`
     margin-bottom: 1rem;
     font-size: 1rem;
-    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     cursor: pointer;
+    gap: 1rem;
 
     &:last-of-type {
         margin: 0;
@@ -59,10 +72,20 @@ const SortButtonDropdownLi = styled.li`
 
 export default function SortButton({ handleSortPriceAsc, handleSortAlphabetical }) {
     const [open, setOpen] = useState(false);
+    const [confirmSort, setConfirmSort] = useState("");
 
     function handleClick() {
         setOpen(!open);
     }
+
+    function handleDropdownClick(e) {
+        e.stopPropagation();
+    }
+
+    function handleConfirmSort(sortType) {
+        setConfirmSort(sortType);
+    }
+
 
     return (
         <SortButtonWrapper open={open} onClick={handleClick}>
@@ -70,19 +93,21 @@ export default function SortButton({ handleSortPriceAsc, handleSortAlphabetical 
                 Sort
             </SortButtonButton>
             <img src={ArrowDown} alt="arrow down" />
-            {open && <SortButtonDropdown>
+            {open && <SortButtonDropdown onClick={handleDropdownClick}>
                 <SortButtonDropdownUl>
-                    <SortButtonDropdownLi>
-                        <button onClick={() => {
+                    <SortButtonDropdownLi onClick={() => {
                             handleSortPriceAsc();
-                            setOpen(false)
-                        }}>Price: low to high</button>
+                            handleConfirmSort("priceAsc");
+                        }}>
+                        <button>Price: low to high</button>
+                        <ClickConfirmed $confirmSort={confirmSort === "priceAsc"} />
                     </SortButtonDropdownLi>
-                    <SortButtonDropdownLi>
-                        <button onClick={() => {
+                    <SortButtonDropdownLi onClick={() => {
                             handleSortAlphabetical(); 
-                            setOpen(false)
-                        }}>Name</button>
+                            handleConfirmSort("alphabetical");
+                        }}>
+                        <button>Name</button>
+                        <ClickConfirmed $confirmSort={confirmSort === "alphabetical"} />
                     </SortButtonDropdownLi>
                 </SortButtonDropdownUl>
             </SortButtonDropdown>}
