@@ -10,6 +10,7 @@ import { AddToCart } from '@/Components/AddToCart';
 import { AddToWishlist } from '@/Components/AddToWishlist';
 import Check from '@/public/images/Check.svg';
 import { CategoriesWrapper } from '@/Components/CategoriesWrapper.style';
+import SortButton from '@/Components/SortButton.style';
 
 export default function Products({ wishlistItems }) {
     const [products, setProducts] = useState([]);
@@ -17,31 +18,31 @@ export default function Products({ wishlistItems }) {
     const [prodsByCat, setProdsByCat] = useState("");
     const [confirmCart, setConfirmCart] = useState("");
     const [wishlistUpdated, setWishlistUpdated] = useState(wishlistItems);
-    const [runEffectSortAlphabetically, setRunEffectSortAlphabetically] = useState(false);
+    const [runEffectSortAlphabetical, setRunEffectSortAlphabetical] = useState(false);
     const [runEffectSortPriceAsc, setRunEffectSortPriceAsc] = useState(false);
 
     useEffect(() => {
-        if (runEffectSortAlphabetically) {
-            console.log("sort alphabetically")
+        if (runEffectSortAlphabetical) {
+            console.log("sort alphabetical")
 
-            const productsSortedAlphabetically = products.sort((a, b) => {
+            const productsSortedAlphabetical = products.sort((a, b) => {
                 const titleA = a.title.toUpperCase();
                 const titleB = b.title.toUpperCase();
                 
                 if (titleA < titleB) {
-                return -1;
+                    return -1;
                 }
                 if (titleA > titleB) {
-                return 1;
+                    return 1;
                 }
-                return 0;
+                    return 0;
             });
 
-            setProducts(productsSortedAlphabetically);
+            setProducts(productsSortedAlphabetical);
 
-            setRunEffectSortAlphabetically(false);
+            setRunEffectSortAlphabetical(false);
         }
-    }, [handleSortAlphabetically])
+    }, [handleSortAlphabetical])
 
     useEffect(() => {
         if (runEffectSortPriceAsc) {
@@ -70,8 +71,8 @@ export default function Products({ wishlistItems }) {
             .catch((error) => console.error('Error fetching categories:', error));
     }, []);
 
-    function handleSortAlphabetically() {
-        setRunEffectSortAlphabetically(true);
+    function handleSortAlphabetical() {
+        setRunEffectSortAlphabetical(true);
     }
 
     function handleSortPriceAsc() {
@@ -121,8 +122,6 @@ export default function Products({ wishlistItems }) {
 
     return (
         <>
-            <button onClick={() => {handleSortAlphabetically()}}>Sort products alphabetically</button>
-            <button onClick={() => {handleSortPriceAsc()}}>Sort products by lowest price</button>
             <DefaultLayout>
                 {/* {categories.map((category) =>
                     <div key={category._id}>
@@ -158,6 +157,12 @@ export default function Products({ wishlistItems }) {
                         </div>
                     )}
                 </CategoriesWrapper>
+
+                <SortButton 
+                    handleSortAlphabetical={() => {handleSortAlphabetical()}} 
+                    handleSortPriceAsc={() => {handleSortPriceAsc()}} 
+                />
+
                 {!prodsByCat && <ProductsWrapper>
                     {products.map((product) => (
                         <div key={product._id}>
