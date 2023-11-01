@@ -4,7 +4,7 @@ export default function Logo() {
     return (
         <div>
             <Link
-                href={route('products')}
+                href={route('home')}
             >
                 <p>Turn Tables</p>
             </Link>
