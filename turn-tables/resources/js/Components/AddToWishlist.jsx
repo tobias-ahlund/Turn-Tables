@@ -7,7 +7,7 @@ const AddToWishlistWrapper = styled.div`
     height: 100%;
 `;
 
-export const AddToWishlist = ({ children, productId, isWishlistItem }) => {
+export const AddToWishlist = ({ children, productId, isWishlistItem, addToWishlist, removeFromWishlist }) => {
     const [inWishlist, setInWishlist] = useState(isWishlistItem);
     const csrfToken = window.csrfToken;
 
@@ -32,6 +32,7 @@ export const AddToWishlist = ({ children, productId, isWishlistItem }) => {
                     if (response.status === 200) {
                         setInWishlist(false);
                         console.log("Removed from wishlist!");
+                        removeFromWishlist();
                     } else {
                         console.error('Error removing product from wishlist');
                     }
@@ -51,6 +52,7 @@ export const AddToWishlist = ({ children, productId, isWishlistItem }) => {
                     if (response.status === 200) {
                         setInWishlist(true);
                         console.log("Added to wishlist!");
+                        addToWishlist();
                     } else {
                         console.error('Error adding product to wishlist');
                     }

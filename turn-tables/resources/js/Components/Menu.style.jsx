@@ -1,5 +1,5 @@
 import Hamburger from "@/public/images/Hamburger.svg";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import { useState } from "react";
 import { Link } from '@inertiajs/react';
 import Close from '@/public/images/Close.svg';

@@ -4,7 +4,13 @@ export const CategoriesWrapper = styled.div`
     display: flex;
     padding: 1rem 0 2rem 0;
     align-items: center;
-    overflow: scroll;
+    overflow-x: scroll;
+
+    @media (min-width: 500px) {
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
 
     button {
         border-right: 1px solid black;

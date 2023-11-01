@@ -16,6 +16,44 @@ export default function Products({ wishlistItems }) {
     const [categories, setCategories] = useState([]);
     const [prodsByCat, setProdsByCat] = useState("");
     const [confirmCart, setConfirmCart] = useState("");
+    const [wishlistUpdated, setWishlistUpdated] = useState(wishlistItems);
+    const [runEffectSortAlphabetically, setRunEffectSortAlphabetically] = useState(false);
+    const [runEffectSortPriceAsc, setRunEffectSortPriceAsc] = useState(false);
+
+    useEffect(() => {
+        if (runEffectSortAlphabetically) {
+            console.log("sort alphabetically")
+
+            const productsSortedAlphabetically = products.sort((a, b) => {
+                const titleA = a.title.toUpperCase();
+                const titleB = b.title.toUpperCase();
+                
+                if (titleA < titleB) {
+                return -1;
+                }
+                if (titleA > titleB) {
+                return 1;
+                }
+                return 0;
+            });
+
+            setProducts(productsSortedAlphabetically);
+
+            setRunEffectSortAlphabetically(false);
+        }
+    }, [handleSortAlphabetically])
+
+    useEffect(() => {
+        if (runEffectSortPriceAsc) {
+            console.log("sort price ascending")
+
+            const productsSortedPriceAsc = products.sort((a, b) => a.price - b.price);
+
+            setProducts(productsSortedPriceAsc)
+
+            setRunEffectSortPriceAsc(false);
+        }
+    }, [handleSortPriceAsc])
 
     useEffect(() => {
         fetchAllProducts()
@@ -31,6 +69,14 @@ export default function Products({ wishlistItems }) {
             })
             .catch((error) => console.error('Error fetching categories:', error));
     }, []);
+
+    function handleSortAlphabetically() {
+        setRunEffectSortAlphabetically(true);
+    }
+
+    function handleSortPriceAsc() {
+        setRunEffectSortPriceAsc(true);
+    }
 
     function cartAddedConfirmed(productId) {
         setConfirmCart(productId);
@@ -56,8 +102,27 @@ export default function Products({ wishlistItems }) {
             .catch((error) => console.error('Error fetching products:', error));
     }
 
+    function removeFromWishlist(id) {
+        if (wishlistUpdated.includes(id)) {
+            setWishlistUpdated(wishlistUpdated.filter(item => item !== id));
+        } else {
+          return;
+        }
+    }
+
+    function addToWishlist(id) {
+        if (wishlistUpdated.includes(id)) {
+            return;
+        } else {
+            const updateWishlist = [...wishlistUpdated, id]
+            setWishlistUpdated(updateWishlist);
+        }
+    }
+
     return (
         <>
+            <button onClick={() => {handleSortAlphabetically()}}>Sort products alphabetically</button>
+            <button onClick={() => {handleSortPriceAsc()}}>Sort products by lowest price</button>
             <DefaultLayout>
                 {/* {categories.map((category) =>
                     <div key={category._id}>
@@ -114,10 +179,12 @@ export default function Products({ wishlistItems }) {
                                 </AddToCart>
                                 <AddToWishlist
                                     productId={product._id}
+                                    removeFromWishlist={() => {removeFromWishlist(product._id)}}
+                                    addToWishlist={() => {addToWishlist(product._id)}}
                                     isWishlistItem={wishlistItems.includes(product._id)}
                                 >
                                     <img 
-                                        src={wishlistItems.includes(product._id) ? WishlistAdded : Wishlist}  
+                                        src={wishlistUpdated.includes(product._id) ? WishlistAdded : Wishlist}  
                                         alt="Wishlist icon." />
                                 </AddToWishlist>
 
