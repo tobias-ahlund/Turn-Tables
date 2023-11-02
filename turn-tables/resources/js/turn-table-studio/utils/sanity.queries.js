@@ -82,14 +82,14 @@ const getWishlist = `*[_type == 'product' && (_id in $ids)]
   price,
   currency,
   slug,
-  category->{
-    title,
-    slug,
-  },
   subcategory->{
     title,
     slug,
-  }
+    category->{
+      title,
+      slug,
+    },
+  },
 }`
 
 const fetchAllProducts = () => client.fetch(getAllProducts);
