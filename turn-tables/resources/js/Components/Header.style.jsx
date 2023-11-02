@@ -3,7 +3,7 @@ import Menu from "@/Components/Menu.style";
 import ShoppingCartLink from "@/Components/ShoppingCartLink.style";
 import Logo from "./Logo";
 import SearchBar from "@/Components/SearchBar";
-import User from "@/public/images/User.svg";
+import ProfileLink from "@/Components/ProfileLink";
 import WishlistLink from "@/Components/WishlistLink.style";
 
 const HeaderWrapper = styled.header`
@@ -55,7 +55,7 @@ const Header = () => {
     const headerItems = [
         <Logo />,
         <SearchBar />,
-        User,
+        <ProfileLink />,
         <ShoppingCartLink />,
         <WishlistLink />,
         <Menu />,
