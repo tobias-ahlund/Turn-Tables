@@ -42,7 +42,7 @@ Route::get('/cart', function () {
 //     return Inertia::render('Wishlist');
 // })->middleware(['auth'])->name('wishlist');
 
-Route::get('/wishlist', 'App\Http\Controllers\WishlistController@show')->middleware(['auth'])->name('wishlist');
+Route::get('/wishlist', 'App\Http\Controllers\WishlistController@show')->middleware(['auth', 'wishlist'])->name('wishlist');
 
 Route::get('/products', function () {
     return Inertia::render('Products/Products');

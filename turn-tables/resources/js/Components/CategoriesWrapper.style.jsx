@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const CategoriesWrapper = styled.div`
     display: flex;
-    padding: 1rem 0 2rem 0;
+    padding: 0 0 2rem 0;
     align-items: center;
     overflow-x: scroll;
 

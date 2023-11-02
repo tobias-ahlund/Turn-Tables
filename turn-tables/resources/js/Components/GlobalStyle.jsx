@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 3rem;
         line-height: 100%;
         border-bottom: 1px solid black;
+        margin-bottom: 2rem;
     }
 
     h2 {

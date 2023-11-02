@@ -27,7 +27,7 @@ export default function Cart() {
   return (
     <DefaultLayout>
       <div>
-        <h2>Shopping Cart</h2>
+        <h1>Shopping cart</h1>
         <p>Items in Cart: {cartCount}</p>
         <p>Total Price: {totalPrice} SEK</p>
 
