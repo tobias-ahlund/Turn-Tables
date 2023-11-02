@@ -3,20 +3,14 @@ import { fetchAllProducts, fetchAllCategories } from "@/turn-table-studio/utils/
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { ProductsWrapper } from '../../Components/ProductsWrapper.style';
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import ShoppingCart from '@/public/images/ShoppingCart.svg';
-import Wishlist from '@/public/images/Wishlist.svg';
-import WishlistAdded from '@/public/images/WishlistAdded.svg';
-import { AddToCart } from '@/Components/AddToCart';
-import { AddToWishlist } from '@/Components/AddToWishlist';
-import Check from '@/public/images/Check.svg';
 import { CategoriesWrapper } from '@/Components/CategoriesWrapper.style';
 import SortButton from '@/Components/SortButton.style';
+import ProductCard from '@/Components/ProductCard.style';
 
 export default function Products({ wishlistItems }) {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [prodsByCat, setProdsByCat] = useState("");
-    const [confirmCart, setConfirmCart] = useState("");
     const [wishlistUpdated, setWishlistUpdated] = useState(wishlistItems);
     const [runEffectSortAlphabetical, setRunEffectSortAlphabetical] = useState(false);
     const [runEffectSortPriceAsc, setRunEffectSortPriceAsc] = useState(false);
@@ -79,13 +73,6 @@ export default function Products({ wishlistItems }) {
         setRunEffectSortPriceAsc(true);
     }
 
-    function cartAddedConfirmed(productId) {
-        setConfirmCart(productId);
-
-        setTimeout(() => {
-            setConfirmCart(null)
-        }, 2000)
-    }
 
     function fetchProdByCat(category) {
         fetchAllProducts()
@@ -103,21 +90,8 @@ export default function Products({ wishlistItems }) {
             .catch((error) => console.error('Error fetching products:', error));
     }
 
-    function removeFromWishlist(id) {
-        if (wishlistUpdated.includes(id)) {
-            setWishlistUpdated(wishlistUpdated.filter(item => item !== id));
-        } else {
-          return;
-        }
-    }
-
-    function addToWishlist(id) {
-        if (wishlistUpdated.includes(id)) {
-            return;
-        } else {
-            const updateWishlist = [...wishlistUpdated, id]
-            setWishlistUpdated(updateWishlist);
-        }
+    function updateWishlist(updatedWishlist) {
+        setWishlistUpdated(updatedWishlist);
     }
 
     return (
@@ -135,13 +109,16 @@ export default function Products({ wishlistItems }) {
                 {/* Filtered products by category */}
                 {prodsByCat && <ProductsWrapper>
                     {prodsByCat.map((product) => (
-                        <div key={product._id}>
-                            <a href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
-                                <img src={urlFor(product.image)} alt="Picture of the product." />
-                                <p>{product.title}</p>
-                                <p>{product.price} {product.currency}</p>
-                            </a>
-                        </div>
+                        <ProductCard
+                        key={product._id}
+                        product={product}
+                        showAddToCart={true}
+                        showAddToWishlist={true}
+                        removeFromWishlist={removeFromWishlist}
+                        addToWishlist={addToWishlist}
+                        isWishlistItem={wishlistItems.includes(product._id)}
+                        wishlistUpdated={wishlistUpdated}
+                        />
                     ))}
                 </ProductsWrapper>}
                 
@@ -165,45 +142,14 @@ export default function Products({ wishlistItems }) {
 
                 {!prodsByCat && <ProductsWrapper>
                     {products.map((product) => (
-                        <div key={product._id}>
-                            <div id="imagesWrapper">
-                            <a 
-                                href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}
-                            >
-                                <img src={urlFor(product.image)} alt="Picture of the product." />
-                            </a>
-                            <div>
-                                <AddToCart
-                                    product={product}
-                                    cartAddedConfirmed={() => cartAddedConfirmed(product._id)}
-                                >
-                                    <img
-                                        src={confirmCart === product._id ? Check : ShoppingCart} 
-                                        alt="Shopping cart icon"
-                                    />
-                                </AddToCart>
-                                <AddToWishlist
-                                    productId={product._id}
-                                    removeFromWishlist={() => {removeFromWishlist(product._id)}}
-                                    addToWishlist={() => {addToWishlist(product._id)}}
-                                    isWishlistItem={wishlistItems.includes(product._id)}
-                                >
-                                    <img 
-                                        src={wishlistUpdated.includes(product._id) ? WishlistAdded : Wishlist}  
-                                        alt="Wishlist icon." />
-                                </AddToWishlist>
-
-                            </div>
-                            </div>
-                            <a 
-                                href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}
-                            >
-                                <div id="prodInfoWrapper">
-                                    <p>{product.title}</p>
-                                    <p>{product.price}:-</p>
-                                </div>
-                            </a>
-                        </div>
+                        <ProductCard
+                        key={product._id}
+                        product={product}
+                        showAddToCart={true}
+                        showAddToWishlist={true}
+                        wishlistUpdated={wishlistUpdated}
+                        updateWishlist={updateWishlist}
+                    />
                     ))}
                 </ProductsWrapper>}
             </DefaultLayout>

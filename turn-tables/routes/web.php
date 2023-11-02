@@ -60,13 +60,13 @@ Route::get('/search/{searchQuerySlug}', function ($searchQuerySlug) {
     return Inertia::render('Search', [
         'searchQuerySlug' => $searchQuerySlug,
     ]);
-})->name('search');
+})->middleware('wishlist')->name('search');
 
 Route::get('/products/{categorySlug}', function ($categorySlug) {
     return Inertia::render('Products/ProductsByCategory', [
         'categorySlug' => $categorySlug,
     ]);
-})->name('products.category');
+})->middleware('wishlist')->name('products.category');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
