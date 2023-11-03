@@ -143,13 +143,13 @@ export default function Products({ wishlistItems }) {
                 {!prodsByCat && <ProductsWrapper>
                     {products.map((product) => (
                         <ProductCard
-                        key={product._id}
-                        product={product}
-                        showAddToCart={true}
-                        showAddToWishlist={true}
-                        wishlistUpdated={wishlistUpdated}
-                        updateWishlist={updateWishlist}
-                    />
+                            key={product._id}
+                            product={product}
+                            showAddToCart={true}
+                            showAddToWishlist={true}
+                            wishlistUpdated={wishlistUpdated}
+                            updateWishlist={updateWishlist}
+                        />
                     ))}
                 </ProductsWrapper>}
             </DefaultLayout>

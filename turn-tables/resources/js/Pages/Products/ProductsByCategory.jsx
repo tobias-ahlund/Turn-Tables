@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { fetchCategory, fetchProductsBySlug } from '@/turn-table-studio/utils/sanity.queries';
-import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { ProductsWrapper } from '@/Components/ProductsWrapper.style';
 import { BreadcrumbsWrapper } from '@/Components/Breadcrumbs.style';
+import ProductCard from '@/Components/ProductCard.style';
 
-export default function ProductsByCategory() {
+export default function ProductsByCategory({ wishlistItems }) {
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState(null);
+    const [wishlistUpdated, setWishlistUpdated] = useState(wishlistItems);
 
     const slug = "/" + location.pathname.split('/').slice(-1)[0];
     const categoryTitle = location.pathname.split('/').slice(-1)[0].charAt(0).toUpperCase() + location.pathname.split('/').slice(-1)[0].slice(1);
@@ -26,6 +27,10 @@ export default function ProductsByCategory() {
             .catch((error) => console.error('Error fetching category:', error));
         }, [slug]);
 
+    function updateWishlist(updatedWishlist) {
+        setWishlistUpdated(updatedWishlist);
+    }
+
     return (
         <>
             <DefaultLayout>
@@ -36,15 +41,14 @@ export default function ProductsByCategory() {
                 </BreadcrumbsWrapper>
                 <ProductsWrapper>
                     {products.map((product) => (
-                    <div key={product._id}>
-                        {product && (
-                        <a href={`/products${product.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}>
-                            <img src={urlFor(product.image)} alt="Picture of the product." />
-                            <p>{product.title}</p>
-                            <p>{product.price} {product.currency}</p>
-                        </a>
-                        )}
-                    </div>
+                        <ProductCard
+                        key={product._id}
+                        product={product}
+                        showAddToCart={true}
+                        showAddToWishlist={true}
+                        wishlistUpdated={wishlistUpdated}
+                        updateWishlist={updateWishlist}
+                        />
                     ))}
                 </ProductsWrapper>
             </DefaultLayout>

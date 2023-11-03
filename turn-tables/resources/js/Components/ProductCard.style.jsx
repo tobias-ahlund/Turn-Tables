@@ -90,7 +90,6 @@ const ProductCard = ({ product, showAddToCart, showAddToWishlist, wishlistUpdate
         updateWishlist([...wishlistUpdated, productId]);
     };
 
-    // Function to remove a product from the wishlist
     const removeFromWishlist = (productId) => {
         updateWishlist(wishlistUpdated.filter((item) => item !== productId));
     };
@@ -99,7 +98,7 @@ const ProductCard = ({ product, showAddToCart, showAddToWishlist, wishlistUpdate
         <ProductCardWrapper>
             <ImagesWrapper>
             <a
-                href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}
+                href={`/products${product.subcategory?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
             >
                 <img src={urlFor(product.image)} alt="Picture of the product." />
             </a>
@@ -131,7 +130,7 @@ const ProductCard = ({ product, showAddToCart, showAddToWishlist, wishlistUpdate
             </div>
             </ImagesWrapper>
             <a 
-                href={`/products${product.subcategory.category.slug.current}${product.subcategory.slug.current}${product.slug.current}`}
+                href={`/products${product.subcategory?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
             >
                 <ProductInfoWrapper>
                     <p>{product.title}</p>
