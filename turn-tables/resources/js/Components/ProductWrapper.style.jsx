@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const ProductWrapper = styled.section`
-    margin: 2rem auto;
+    margin: 0 auto;
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     gap: 2rem;
@@ -20,30 +20,10 @@ export const ProductWrapper = styled.section`
         aspect-ratio: 1/1;
     }
 
-    & div:first-child > div:last-of-type {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        background-color: white;
-        border-radius: 100%;
-        height: 2.5rem;
-        width: 2.5rem;
-        display: flex;
-        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-        margin: 0.75rem;
-    }
-
     & div:nth-of-type(1) > div:last-of-type > img {
         margin: auto;
         width: 1.5rem;
         height: 1.5rem;
-    }
-
-    & > div:nth-of-type(2) {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: flex-start;
     }
 
     & > div > div:last-of-type {

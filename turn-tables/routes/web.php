@@ -54,7 +54,7 @@ Route::get('/products/{categorySlug}/{subCategorySlug}/{productSlug}', function 
         'subCategorySlug' => $subCategorySlug,
         'productSlug' => $productSlug,
     ]);
-});
+})->middleware('wishlist');
 
 Route::get('/search/{searchQuerySlug}', function ($searchQuerySlug) {
     return Inertia::render('Search', [

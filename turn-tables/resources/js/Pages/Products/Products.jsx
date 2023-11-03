@@ -73,7 +73,6 @@ export default function Products({ wishlistItems }) {
         setRunEffectSortPriceAsc(true);
     }
 
-
     function fetchProdByCat(category) {
         fetchAllProducts()
             .then((data) => {
@@ -110,14 +109,14 @@ export default function Products({ wishlistItems }) {
                 {prodsByCat && <ProductsWrapper>
                     {prodsByCat.map((product) => (
                         <ProductCard
-                        key={product._id}
-                        product={product}
-                        showAddToCart={true}
-                        showAddToWishlist={true}
-                        removeFromWishlist={removeFromWishlist}
-                        addToWishlist={addToWishlist}
-                        isWishlistItem={wishlistItems.includes(product._id)}
-                        wishlistUpdated={wishlistUpdated}
+                            key={product._id}
+                            product={product}
+                            showAddToCart={true}
+                            showAddToWishlist={true}
+                            removeFromWishlist={removeFromWishlist}
+                            addToWishlist={addToWishlist}
+                            isWishlistItem={wishlistItems.includes(product._id)}
+                            wishlistUpdated={wishlistUpdated}
                         />
                     ))}
                 </ProductsWrapper>}
