@@ -30,10 +30,14 @@ export default function Cart() {
 		const stripe = await getStripe();
 
 		const lineItems = Object.values(cartDetails).map((product) => ({
-			name: product.name,
-			price: product.price * 100,
-			currency: product.currency,
-			quantity: product.quantity,
+			"price_data": {
+				"currency": product.currency,
+				"unit_amount": product.price * 100,
+				"product_data": {
+					"name": product.name,
+				},
+			},
+			"quantity": product.quantity,
 		}));
 
 		try {
