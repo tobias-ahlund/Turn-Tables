@@ -10,7 +10,7 @@ import { CartProvider } from 'use-shopping-cart';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-const stripeKey = import.meta.env.STRIPE_PUBLIC_KEY;
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

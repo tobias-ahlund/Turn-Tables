@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 class SessionController extends Controller
 {
     public function session() {
-        $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET_KEY"));
+        $stripe = new \Stripe\StripeClient(env("VITE_STRIPE_SECRET_KEY"));
 
         $session = $stripe->checkout->sessions->create([
-            'success_url' => 'https://localhost:8000',
-            'cancel_url' => 'https://localhost:8000',
+            'success_url' => 'http://localhost:8000',
+            'cancel_url' => 'http://localhost:8000',
             'line_items' => [
                 [
                     'price_data' => [
@@ -27,6 +27,6 @@ class SessionController extends Controller
             'mode' => 'payment',
         ]);
     
-        return response()->json(['sessionId' => $session->id]);
+        return response(['sessionId' => $session->id]);
     }
 }

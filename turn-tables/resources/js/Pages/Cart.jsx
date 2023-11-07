@@ -37,30 +37,28 @@ export default function Cart() {
 		}));
 
 		try {
-		const response = await axios.post('/create-session', { lineItems }, {
-			headers: {
-			'Content-Type': 'application/json',
-			'X-CSRF-TOKEN': csrfToken,
-			},
-		});
-
-		if (response.status === 200) {
-			console.log(response.data.sessionId);
-
-			const { error } = await stripe.redirectToCheckout({
-				sessionId: response.data.sessionId,
+			const response = await axios.post('/create-session', { lineItems }, {
+				headers: {
+				'Content-Type': 'application/json',
+				'X-CSRF-TOKEN': csrfToken,
+				},
 			});
 
-			if (error) {
-			console.error(result);
+			if (response.status === 200) {				
+				const { error } = await stripe.redirectToCheckout({
+					sessionId: response.data.sessionId,
+				});
+
+				if (error) {
+				console.error(error.message);
+				}
+			} else {
+				console.error('Error creating session. Status:', response.status);
 			}
-		} else {
-			console.error('Error creating session. Status:', response.status);
+			} catch (error) {
+				console.error("Error creating session:", error);
+			}
 		}
-		} catch (error) {
-			console.error("Error creating session:", error);
-		}
-	}
 
 	return (
 		<DefaultLayout>
