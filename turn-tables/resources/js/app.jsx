@@ -10,13 +10,26 @@ import { CartProvider } from 'use-shopping-cart';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
+const stripeKey = import.meta.env.STRIPE_PUBLIC_KEY;
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<CartProvider mode="client-only"><><GlobalStyle /><App {...props} /></></CartProvider>);
+        root.render(
+            <CartProvider 
+                mode="payment"
+                cartMode='checkout-session'
+                stripe={stripeKey}
+                currency="sek"
+            >
+                <>
+                <GlobalStyle />
+                <App {...props} />
+                </>
+            </CartProvider>);
     },
     progress: {
         color: '#4B5563',

@@ -42,6 +42,8 @@ Route::get('/cart', function () {
 //     return Inertia::render('Wishlist');
 // })->middleware(['auth'])->name('wishlist');
 
+Route::post('/create-session', 'App\Http\Controllers\SessionController@session')->name('create-session');
+
 Route::get('/wishlist', 'App\Http\Controllers\WishlistController@show')->middleware(['auth', 'wishlist'])->name('wishlist');
 
 Route::get('/products', function () {
