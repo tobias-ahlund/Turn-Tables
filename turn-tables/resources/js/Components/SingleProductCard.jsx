@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { AddToWishlist } from './AddToWishlist';
-import Wishlist from '@/public/images/Wishlist.svg';
-import WishlistAdded from '@/public/images/WishlistAdded.svg';
 
 const ImageWrapper = styled.div`
     aspect-ratio: 1/1;
@@ -49,14 +47,7 @@ const ImageWrapper = styled.div`
 const SingleProductCardWrapper = styled.div`
 `;
 
-const SingleProductCard = ({ product, showAddToWishlist, wishlistUpdated, updateWishlist }) => {
-    const addToWishlist = (productId) => {
-        updateWishlist([...wishlistUpdated, productId]);
-    };
-
-    const removeFromWishlist = (productId) => {
-        updateWishlist(wishlistUpdated.filter((item) => item !== productId));
-    };
+const SingleProductCard = ({ product, showAddToWishlist }) => {
 
     return (
         <SingleProductCardWrapper>
@@ -65,15 +56,7 @@ const SingleProductCard = ({ product, showAddToWishlist, wishlistUpdated, update
                 <div>
                     {showAddToWishlist && (
                         <AddToWishlist
-                            productId={product._id}
-                            removeFromWishlist={() => removeFromWishlist(product._id)}
-                            addToWishlist={() => addToWishlist(product._id)}
-                            isWishlistItem={wishlistUpdated.includes(product._id)}
-                        >
-                        <img
-                            src={wishlistUpdated.includes(product._id) ? WishlistAdded : Wishlist}
-                            alt="Wishlist icon."
-                        />
+                            productId={product._id}>
                         </AddToWishlist>
                     )}
                 </div>

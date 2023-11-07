@@ -4,27 +4,27 @@ import { useEffect, useState } from 'react';
 import ProductCard from '@/Components/ProductCard.style';
 import { ProductsWrapper } from '@/Components/ProductsWrapper.style';
 
-export default function Wishlist({ productIds, wishlistItems }) {
-    const [products, setProducts] = useState(null);
-    const [wishlistUpdated, setWishlistUpdated] = useState(wishlistItems);
+export default function Wishlist({ productIds }) {
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetchWishlist(wishlistUpdated)
+        fetchWishlist(productIds)
             .then((data) => {
                 setProducts(data);
             })
             .catch((error) => console.error('Error fetching product:', error));
-    }, [wishlistUpdated]);
+    }, []);
 
-    function updateWishlist(updatedWishlist) {
-        setWishlistUpdated(updatedWishlist);
-    }
+    const removeFromWishlist = (productId) => {
+        const updatedProducts = products.filter((product) => product._id !== productId);
+        setProducts(updatedProducts);
+    };
 
     return (
         <>
             <DefaultLayout>
                 <>
-                {products ? (
+                {products.length > 0 ? (
                 <>
                     <h1>Wishlist</h1>
                     <ProductsWrapper>
@@ -34,14 +34,16 @@ export default function Wishlist({ productIds, wishlistItems }) {
                                 product={product}
                                 showAddToCart={true}
                                 showAddToWishlist={true}
-                                wishlistUpdated={wishlistUpdated}
-                                updateWishlist={updateWishlist}
+                                onRemoveFromWishlist={removeFromWishlist}
                             />
                         ))}
                     </ProductsWrapper>
                 </>
                 ) : (
-                    <p>No products in your wishlist</p>
+                    <>
+                        <h1>Wishlist</h1>
+                        <p>No products in your wishlist</p>
+                    </>
                 )}
                 </> 
             </DefaultLayout>

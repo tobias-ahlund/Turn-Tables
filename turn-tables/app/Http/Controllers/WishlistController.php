@@ -22,6 +22,17 @@ class WishlistController extends Controller
         ]);
     }
 
+    public function getWishlist(Request $request)
+    {
+        $user = $request->user();
+
+        $productIds = Wishlist::where('user_id', $user->id)->pluck('product_id');
+
+        Inertia::share('wishlistItems', $productIds);
+
+        return response()->json(['productIds' => $productIds]);
+    }
+
     public function addToWishlist(Request $request)
     {
         $user = $request->user();

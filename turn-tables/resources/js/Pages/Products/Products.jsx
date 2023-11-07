@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { fetchAllProducts, fetchAllCategories } from "@/turn-table-studio/utils/sanity.queries";
-import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { ProductsWrapper } from '../../Components/ProductsWrapper.style';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { CategoriesWrapper } from '@/Components/CategoriesWrapper.style';
 import SortButton from '@/Components/SortButton.style';
 import ProductCard from '@/Components/ProductCard.style';
 
-export default function Products({ wishlistItems }) {
+export default function Products() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [prodsByCat, setProdsByCat] = useState("");
-    const [wishlistUpdated, setWishlistUpdated] = useState(wishlistItems);
     const [runEffectSortAlphabetical, setRunEffectSortAlphabetical] = useState(false);
     const [runEffectSortPriceAsc, setRunEffectSortPriceAsc] = useState(false);
 
@@ -29,14 +27,14 @@ export default function Products({ wishlistItems }) {
                 if (titleA > titleB) {
                     return 1;
                 }
-                    return 0;
+                return 0;
             });
 
             setProducts(productsSortedAlphabetical);
 
             setRunEffectSortAlphabetical(false);
         }
-    }, [handleSortAlphabetical])
+    }, [handleSortAlphabetical]);
 
     useEffect(() => {
         if (runEffectSortPriceAsc) {
@@ -44,11 +42,11 @@ export default function Products({ wishlistItems }) {
 
             const productsSortedPriceAsc = products.sort((a, b) => a.price - b.price);
 
-            setProducts(productsSortedPriceAsc)
+            setProducts(productsSortedPriceAsc);
 
             setRunEffectSortPriceAsc(false);
         }
-    }, [handleSortPriceAsc])
+    }, [handleSortPriceAsc]);
 
     useEffect(() => {
         fetchAllProducts()
@@ -83,14 +81,10 @@ export default function Products({ wishlistItems }) {
                 }
                 const filteredData = data.filter((product) =>
                     product.subcategory.category.title === category
-                )
+                );
                 setProdsByCat(filteredData);
             })
             .catch((error) => console.error('Error fetching products:', error));
-    }
-
-    function updateWishlist(updatedWishlist) {
-        setWishlistUpdated(updatedWishlist);
     }
 
     return (
@@ -113,10 +107,6 @@ export default function Products({ wishlistItems }) {
                             product={product}
                             showAddToCart={true}
                             showAddToWishlist={true}
-                            removeFromWishlist={removeFromWishlist}
-                            addToWishlist={addToWishlist}
-                            isWishlistItem={wishlistItems.includes(product._id)}
-                            wishlistUpdated={wishlistUpdated}
                         />
                     ))}
                 </ProductsWrapper>}
@@ -125,13 +115,13 @@ export default function Products({ wishlistItems }) {
                 <h1>All products</h1>
                 <CategoriesWrapper>
                     <h2>Shop by category</h2>
-                    {categories.map((category) =>
+                    {categories.map((category) => (
                         <div key={category._id}>
                             <a href={`/products${category.slug.current}`}>
                                 <button onClick={() => fetchProdByCat(category.title)}>{category.title}</button>
                             </a>
                         </div>
-                    )}
+                    ))}
                 </CategoriesWrapper>
 
                 <SortButton 
@@ -146,8 +136,6 @@ export default function Products({ wishlistItems }) {
                             product={product}
                             showAddToCart={true}
                             showAddToWishlist={true}
-                            wishlistUpdated={wishlistUpdated}
-                            updateWishlist={updateWishlist}
                         />
                     ))}
                 </ProductsWrapper>}

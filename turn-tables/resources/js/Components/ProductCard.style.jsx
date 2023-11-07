@@ -1,15 +1,12 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import { AddToCart } from './AddToCart';
 import { AddToWishlist } from './AddToWishlist';
-import Check from '@/public/images/Check.svg';
 import ShoppingCart from '@/public/images/ShoppingCart.svg';
-import Wishlist from '@/public/images/Wishlist.svg';
-import WishlistAdded from '@/public/images/WishlistAdded.svg';
-import { useState } from 'react';
+import Check from '@/public/images/Check.svg';
 
 const ImagesWrapper = styled.div`
-    
     position: relative;
 
     > div:first-of-type {
@@ -39,20 +36,20 @@ const ImagesWrapper = styled.div`
         height: 1.5rem;
         margin: auto;
     }
-    
+
     a {
         overflow: hidden;
         display: block;
     }
 
     a > img {
-        transition: transform .5s ease-in-out;
+        transition: transform 0.5s ease-in-out;
     }
 
     a > img:hover {
         transform: scale(1.1);
     }
-`
+`;
 
 const ProductInfoWrapper = styled.div`
     display: flex;
@@ -71,65 +68,48 @@ const ProductInfoWrapper = styled.div`
     }
 `;
 
-const ProductCardWrapper = styled.article`
-`;
+const ProductCardWrapper = styled.article``;
 
-const ProductCard = ({ product, showAddToCart, showAddToWishlist, wishlistUpdated, updateWishlist }) => {
-
+const ProductCard = ({ product, showAddToCart, showAddToWishlist, onRemoveFromWishlist }) => {
     const [cartImage, setCartImage] = useState(null);
-    
+
     const cartAddedConfirmed = () => {
         setCartImage(product._id);
-    
+
         setTimeout(() => {
-          setCartImage(null);
+            setCartImage(null);
         }, 2000);
-      };
-
-    const addToWishlist = (productId) => {
-        updateWishlist([...wishlistUpdated, productId]);
-    };
-
-    const removeFromWishlist = (productId) => {
-        updateWishlist(wishlistUpdated.filter((item) => item !== productId));
     };
 
     return (
         <ProductCardWrapper>
             <ImagesWrapper>
-            <a
-                href={`/products${product.subcategory?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
-            >
-                <img src={urlFor(product.image)} alt="Picture of the product." />
-            </a>
-            <div>
-                {showAddToCart && (
-                    <AddToCart
-                    product={product}
-                    cartAddedConfirmed={cartAddedConfirmed}
-                    >
-                    <img
-                        src={cartImage === product._id ? Check : ShoppingCart}
-                        alt="Shopping cart icon."
-                    />
-                    </AddToCart>
-                )}
-                {showAddToWishlist && (
-                    <AddToWishlist
-                    productId={product._id}
-                    removeFromWishlist={() => removeFromWishlist(product._id)}
-                    addToWishlist={() => addToWishlist(product._id)}
-                    isWishlistItem={wishlistUpdated.includes(product._id)}
-                    >
-                    <img
-                        src={wishlistUpdated.includes(product._id) ? WishlistAdded : Wishlist}
-                        alt="Wishlist icon."
-                    />
-                    </AddToWishlist>
-                )}
-            </div>
+                <a
+                    href={`/products${product.subcategory?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
+                >
+                    <img src={urlFor(product.image)} alt="Picture of the product." />
+                </a>
+                <div>
+                    {showAddToCart && (
+                        <AddToCart
+                            product={product}
+                            cartAddedConfirmed={cartAddedConfirmed}
+                        >
+                            <img
+                                src={cartImage === product._id ? Check : ShoppingCart}
+                                alt="Shopping cart icon."
+                            />
+                        </AddToCart>
+                    )}
+                    {showAddToWishlist && (
+                        <AddToWishlist 
+                            productId={product._id}
+                            onRemoveFromWishlist={onRemoveFromWishlist}>
+                        </AddToWishlist>
+                    )}
+                </div>
             </ImagesWrapper>
-            <a 
+            <a
                 href={`/products${product.subcategory?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
             >
                 <ProductInfoWrapper>

@@ -13,7 +13,6 @@ export default function Search({ wishlistItems }) {
     const [products, setProducts] = useState([]);
     const [confirmCart, setConfirmCart] = useState("");
     const [productSearch, setProductSearch] = useState("")
-    const [wishlistUpdated, setWishlistUpdated] = useState(wishlistItems);
 
     useEffect(() => {
         const url = window.location.href;
@@ -34,10 +33,6 @@ export default function Search({ wishlistItems }) {
         setTimeout(() => {
             setConfirmCart(null)
         }, 2000)
-    }
-
-    function updateWishlist(updatedWishlist) {
-        setWishlistUpdated(updatedWishlist);
     }
 
     const filteredProducts = products.filter((product) =>
@@ -61,8 +56,6 @@ export default function Search({ wishlistItems }) {
                         product={product}
                         showAddToCart={true}
                         showAddToWishlist={true}
-                        wishlistUpdated={wishlistUpdated}
-                        updateWishlist={updateWishlist}
                         />
                     ))}
                 </ProductsWrapper>

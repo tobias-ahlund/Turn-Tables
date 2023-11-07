@@ -29,7 +29,6 @@ Route::get('/welcome', function () {
     ]);
 });
 
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -44,11 +43,11 @@ Route::get('/cart', function () {
 
 Route::post('/create-session', 'App\Http\Controllers\SessionController@session')->name('create-session');
 
-Route::get('/wishlist', 'App\Http\Controllers\WishlistController@show')->middleware(['auth', 'wishlist'])->name('wishlist');
+Route::get('/wishlist', 'App\Http\Controllers\WishlistController@show')->middleware('auth')->name('wishlist');
 
 Route::get('/products', function () {
     return Inertia::render('Products/Products');
-})->middleware('wishlist')->name('products');
+})->name('products');
 
 Route::get('/products/{categorySlug}/{subCategorySlug}/{productSlug}', function ($categorySlug, $subCategorySlug, $productSlug) {
     return Inertia::render('Products/Product', [
@@ -56,25 +55,27 @@ Route::get('/products/{categorySlug}/{subCategorySlug}/{productSlug}', function 
         'subCategorySlug' => $subCategorySlug,
         'productSlug' => $productSlug,
     ]);
-})->middleware('wishlist');
+});
 
 Route::get('/search/{searchQuerySlug}', function ($searchQuerySlug) {
     return Inertia::render('Search', [
         'searchQuerySlug' => $searchQuerySlug,
     ]);
-})->middleware('wishlist')->name('search');
+})->name('search');
 
 Route::get('/products/{categorySlug}', function ($categorySlug) {
     return Inertia::render('Products/ProductsByCategory', [
         'categorySlug' => $categorySlug,
     ]);
-})->middleware('wishlist')->name('products.category');
+})->name('products.category');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/api/wishlist', 'App\Http\Controllers\WishlistController@getWishlist');
 
 Route::post('/wishlist/add', 'App\Http\Controllers\WishlistController@addToWishlist')->name('wishlist.add');
 

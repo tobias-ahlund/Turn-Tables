@@ -2,79 +2,105 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import axios from 'axios';
 import { usePage } from '@inertiajs/react'
+import Wishlist from '@/public/images/Wishlist.svg';
+import WishlistAdded from '@/public/images/WishlistAdded.svg';
 
 const AddToWishlistWrapper = styled.div`
     width: 100%;
     height: 100%;
 `;
 
-export const AddToWishlist = ({ children, productId, isWishlistItem, addToWishlist, removeFromWishlist }) => {
-
+export const AddToWishlist = ({ productId, onRemoveFromWishlist }) => {
     const { auth } = usePage().props
-
-    const [inWishlist, setInWishlist] = useState(isWishlistItem);
+    const [inWishlist, setInWishlist] = useState(false);
+    const [wishlistItems, setWishlistItems] = useState([]);
     const csrfToken = window.csrfToken;
 
     useEffect(() => {
-        setInWishlist(isWishlistItem);
-    }, [isWishlistItem]);
+        if (auth.user) {
+        axios.get('/api/wishlist')
+            .then(response => {
+                const wishlistItems = response.data.productIds;
+                setInWishlist(wishlistItems.includes(productId));
+                setWishlistItems(wishlistItems);
+            })
+            .catch(error => {
+                console.error('Error fetching wishlist items', error);
+            });
+        }
+    }, [productId]);
 
-    function updateWishlist() {
-        const data = {
-            product_id: productId,
-        };
-
+    function addToWishlist() {
         if (!auth.user) {
             window.location.href = '/login';
             return;
         }
 
+        axios.post(route('wishlist.add'), { product_id: productId }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+        })
+        .then(response => {
+            if (response.status === 200) {
+                setInWishlist(true);
+                setWishlistItems([...wishlistItems, productId]);
+                console.log("Added to wishlist!");
+            } else {
+                console.error('Error adding product to wishlist');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+
+    function removeFromWishlist() {
+        if (!auth.user) {
+            window.location.href = '/login';
+            return;
+        }
+
+        axios.post(route('wishlist.remove'), { product_id: productId }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+        })
+        .then(response => {
+            if (response.status === 200) {
+                setInWishlist(false);
+                const updatedWishlist = wishlistItems.filter(item => item !== productId);
+                setWishlistItems(updatedWishlist);
+                console.log("Removed from wishlist!");
+
+                if (onRemoveFromWishlist) {
+                    onRemoveFromWishlist(productId);
+                }
+            } else {
+                console.error('Error removing product from wishlist');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+
+    function updateWishlist() {
         if (inWishlist) {
-            axios
-                .post(route('wishlist.remove'), data, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                    },
-                })
-                .then((response) => {
-                    if (response.status === 200) {
-                        setInWishlist(false);
-                        console.log("Removed from wishlist!");
-                        removeFromWishlist();
-                    } else {
-                        console.error('Error removing product from wishlist');
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+            removeFromWishlist();
         } else {
-            axios
-                .post(route('wishlist.add'), data, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                    },
-                })
-                .then((response) => {
-                    if (response.status === 200) {
-                        setInWishlist(true);
-                        console.log("Added to wishlist!");
-                        addToWishlist();
-                    } else {
-                        console.error('Error adding product to wishlist');
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+            addToWishlist();
         }
     }
 
     return (
         <AddToWishlistWrapper onClick={updateWishlist}>
-            {children}
+            <img 
+                src={wishlistItems.includes(productId) ? WishlistAdded : Wishlist} 
+                alt="Wishlist icon.">
+            </img>
         </AddToWishlistWrapper>
     );
 };
