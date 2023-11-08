@@ -85,7 +85,7 @@ const ProductCard = ({ product, showAddToCart, showAddToWishlist, onRemoveFromWi
         <ProductCardWrapper>
             <ImagesWrapper>
                 <a
-                    href={`/products${product.subcategory?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
+                    href={`/products${product.category?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
                 >
                     <img src={urlFor(product.image)} alt="Picture of the product." />
                 </a>
@@ -110,7 +110,7 @@ const ProductCard = ({ product, showAddToCart, showAddToWishlist, onRemoveFromWi
                 </div>
             </ImagesWrapper>
             <a
-                href={`/products${product.subcategory?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
+                href={`/products${product.category?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
             >
                 <ProductInfoWrapper>
                     <p>{product.title}</p>
