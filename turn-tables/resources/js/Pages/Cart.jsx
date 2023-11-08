@@ -68,7 +68,12 @@ export default function Cart() {
 
 	return (
 		<DefaultLayout>
-			<button onClick={handleCheckout}>Checkout</button>
+			{cartCount > 0 && (
+				<>
+				<button onClick={handleCheckout}>Checkout</button>
+				<p>To complete purchase in this test version, use card number 4242 4242 4242 4242.</p>
+				</>
+			)}
 			<div>
 			<h1>Shopping cart</h1>
 			<p>Items in Cart: {cartCount}</p>
@@ -87,7 +92,7 @@ export default function Cart() {
 				</ProductCartWrapper>
 			))}
 
-			<button onClick={clearCart}>Clear Cart</button>
+			{cartCount > 0 && <button onClick={clearCart}>Clear Cart</button>}
 			</div>
 		</DefaultLayout>
 	);
