@@ -3,7 +3,7 @@ import { client } from "./sanity.client";
 const getAllProducts = `*[_type == 'product'] {
   _id,
   title,
-  image,
+  "image": image.asset->url,
   price,
   currency,
   slug,
@@ -21,7 +21,7 @@ const getProductsBySlug = `*[_type == 'product' && category->slug.current == $sl
 {
   _id,
   title,
-  image,
+  "image": image.asset->url,
   description,
   price,
   currency,
@@ -39,7 +39,7 @@ const getProductsBySlug = `*[_type == 'product' && category->slug.current == $sl
 const getProductBySlug = `*[_type == "product" && slug.current == $slug][0] {
   _id,
   title,
-  image,
+  "image": image.asset->url,
   description,
   price,
   currency,
@@ -77,7 +77,7 @@ const getWishlist = `*[_type == 'product' && (_id in $ids)]
 {
   _id,
   title,
-  image,
+  "image": image.asset->url,
   description,
   price,
   currency,

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useShoppingCart } from 'use-shopping-cart';
-import { urlFor } from '@/turn-table-studio/utils/sanity.client';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -35,6 +34,9 @@ export default function Cart() {
 				"unit_amount": product.price * 100,
 				"product_data": {
 					"name": product.name,
+					"images": [
+						product.image,
+					],
 				},
 			},
 			"quantity": product.quantity,
@@ -74,7 +76,7 @@ export default function Cart() {
 
 			{Object.values(cartDetails).map((item) => (
 				<ProductCartWrapper key={item.id}>
-					<ProductImage src={urlFor(item.image)} alt="Image of the product." />
+					<ProductImage src={item.image} alt="Image of the product." />
 					<div>
 					<p>{item.name}</p>
 					<p>Price: {item.price} SEK</p>
