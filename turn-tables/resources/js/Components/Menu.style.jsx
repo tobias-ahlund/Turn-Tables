@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link } from '@inertiajs/react';
 import Close from '@/public/images/Close.svg';
 import Logo from "@/components/Logo";
+import { usePage } from '@inertiajs/react'
 
 const MenuWrapper = styled.div`
     display: flex;
@@ -132,6 +133,8 @@ const MenuWindow = styled.div`
 const Menu = () => {
     const [showMenu, setShowMenu] = useState(false)
 
+    const { user } = usePage().props;
+
     const categories = [
         "All products",
         "Furniture",
@@ -170,6 +173,7 @@ const Menu = () => {
                             </li>
                         )}
                     </ul>
+                    {user ? <div>Signed in as {user.name}</div> : <div>Sign in/register</div>}
                 </div>
                 <div onClick={() => handleToggleMenu()}></div>
             </MenuWindow>
