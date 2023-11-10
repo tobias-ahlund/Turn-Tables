@@ -5,12 +5,30 @@ import { Link } from '@inertiajs/react';
 import Close from '@/public/images/Close.svg';
 import Logo from "@/components/Logo";
 import { usePage } from '@inertiajs/react'
+import Profile from '@/public/images/Profile.svg';
 
 const MenuWrapper = styled.div`
     display: flex;
+`
 
-    & button {
-        z-index: ${props => props.open ? "0" : "101"};
+const MenuWindowWrapper = styled.div`
+`
+
+const MenuWindow = styled.div`
+    z-index: 100;
+    background-color: #f0f0f0;
+    border-right: 1px solid lightgray;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 400px;
+    transform: translateX(${props => (props.open ? "0" : "-100%")});
+    transition: transform .3s ease-in-out;
+
+    @media (max-width: 400px) {
+        width: 100%;
+        border: none;
     }
 `
 
@@ -37,73 +55,39 @@ const LogoCloseButtonWrapper = styled.div`
     }
 `;
 
-const MenuWindow = styled.div`
-    & > div > div:nth-of-type(2) {
-        color: red;
-        display: inline-block;
-        margin: 2rem 0 0 2rem;
+const UserLink = styled.div`
+    padding: 2rem 0 2rem 0;
+    border-bottom: 1px solid black;
+    margin: 0 2rem;
+
+    & a {
         display: flex;
+        align-items: center;
+        gap: .5rem;
     }
+`
 
-    & > div:last-of-type {
-        position: fixed;
-        z-index: 99;
-        right: 0;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        background-color: black;
-        transition: all .3s ease-in-out;
-        opacity: ${props => props.open ? ".6" : "0"};
-        pointer-events: ${props => props.open ? "all" : "none"};
-    }
+const MenuList = styled.ul`
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    align-items: flex-start;
+    margin-top: 1rem;
+    line-height: 125%;
+    gap: 1rem;
+    padding: 0 2rem;
 
-    & > div:first-of-type {
-        z-index: 100;
-        background-color: #f0f0f0;
-        border-right: 1px solid lightgray;
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 400px;
-        transform: translateX(${props => (props.open ? "0" : "-100%")});
-        transition: transform .3s ease-in-out;
-    }
-
-    @media (max-width: 400px) {
-        & > div:first-of-type {
-            width: 100%;
-            border: none;
-        }
-
-        & > div:last-of-type, & button {
-            display: none;
-        }
-    }
-
-    & ul {
-        display: flex;
-        flex-direction: column;
-        font-size: 1.5rem;
-        align-items: flex-start;
-        margin-top: 1rem;
-        line-height: 125%;
-        gap: 1rem;
-        padding: 0 2rem;
-    }
-
-    & ul li {
+    & li {
         position: relative;
         color: #000;
         text-decoration: none;
     }
 
-    & ul li:hover {
+    & li:hover {
         color: #000;
     }
 
-    & ul li::before {
+    & li::before {
         content: "";
         position: absolute;
         display: block;
@@ -117,16 +101,33 @@ const MenuWindow = styled.div`
         transform-origin: bottom left;
     }
 
-    & ul li:hover::before {
+    & li:hover::before {
         transform: scaleX(1);
     }
 
-    & ul li:not(:hover)::before {
+    & li:not(:hover)::before {
         transition: none;
     }
 
-    & ul li:first-child {
+    & li:first-child {
         font-weight: bold;
+    }
+`
+
+const MenuBackground = styled.div`
+    position: fixed;
+    z-index: 99;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: black;
+    transition: all .3s ease-in-out;
+    opacity: ${props => props.open ? ".6" : "0"};
+    pointer-events: ${props => props.open ? "all" : "none"};
+
+    @media (max-width: 400px) {
+        display: none;
     }
 `
 
@@ -153,15 +154,23 @@ const Menu = () => {
             <button onClick={() => handleToggleMenu()}>
                 <img src={Hamburger} alt="Hamburger menu icon" />
             </button>
-            <MenuWindow open={showMenu}>
-                <div>
+            <MenuWindowWrapper>
+                <MenuWindow open={showMenu}>
                     <LogoCloseButtonWrapper>
                         <Logo />
                         <CloseButtonWrapper onClick={() => handleToggleMenu()}>
                             <img src={Close} alt="close button" />
                         </CloseButtonWrapper>
                     </LogoCloseButtonWrapper>
-                    <ul>
+                    <UserLink>
+                        <Link
+                            href={route(user ? "dashboard" : "login")}    
+                        >
+                            <img src={Profile} alt="Profile page link icon" />
+                            {user ? `Signed in as ${user.name}` : "Sign in/register"}
+                        </Link>
+                    </UserLink>
+                    <MenuList>
                         {categoriesLowerCase.map((category, index) =>
                             <li key={index}>
                                 <Link
@@ -169,14 +178,12 @@ const Menu = () => {
                                 >
                                     {categories[index]}
                                 </Link>
-                                <br />
                             </li>
                         )}
-                    </ul>
-                    {user ? <div>Signed in as {user.name}</div> : <div>Sign in/register</div>}
-                </div>
-                <div onClick={() => handleToggleMenu()}></div>
-            </MenuWindow>
+                    </MenuList>
+                </MenuWindow>
+                <MenuBackground open={showMenu} onClick={() => handleToggleMenu()}></MenuBackground>
+            </MenuWindowWrapper>
         </MenuWrapper>
     );
 }
