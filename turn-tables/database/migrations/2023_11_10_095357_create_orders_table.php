@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('price');
+            $table->string('order_id', 255);
+            $table->decimal('price');
             $table->string('product_id');
+            $table->unsignedBigInteger('quantity');
         });
     }
 

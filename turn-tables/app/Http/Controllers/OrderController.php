@@ -16,8 +16,6 @@ class OrderController extends Controller
 
             $cartDetails = $request->input('cart_details');
 
-            $cartDetails = json_decode("{$cartDetails}", true);
-
             $totalPrice = $request->input('total_price');
 
             $order_id = uniqid();
@@ -26,17 +24,15 @@ class OrderController extends Controller
 
             foreach ($cartDetails as $cartDetail => $productData) {
 
-                
                 $productIds = $productData['id'];
-                $resultData[] = $productIds;
-                
-                Log::info('LOOOOOOOG:', $resultData);
+                $productQuantity = $productData['quantity'];
 
                     $orderItems[] = [
                         'user_id' => $user->id,
                         'order_id' => $order_id,
                         'price' => $totalPrice,
-                        'product_id' => $resultData
+                        'product_id' => $productIds,
+                        'quantity' => $productQuantity
                     ];
                 };
 
