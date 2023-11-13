@@ -5,6 +5,7 @@ import { AddToCart } from './AddToCart';
 import { AddToWishlist } from './AddToWishlist';
 import ShoppingCart from '@/public/images/ShoppingCart.svg';
 import Check from '@/public/images/Check.svg';
+import { Link } from '@inertiajs/react';
 
 const ImagesWrapper = styled.div`
     position: relative;
@@ -85,7 +86,7 @@ const ProductCard = ({ product, showAddToCart, showAddToWishlist, onRemoveFromWi
         <ProductCardWrapper>
             <ImagesWrapper>
                 <a
-                    href={`/products${product.category?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
+                    href={`/products${product.subcategory?.category?.slug?.current || product.category?.slug?.current }${product.subcategory?.slug?.current}${product.slug?.current}`}
                 >
                     <img src={urlFor(product.image)} alt="Picture of the product." />
                 </a>
@@ -109,8 +110,9 @@ const ProductCard = ({ product, showAddToCart, showAddToWishlist, onRemoveFromWi
                     )}
                 </div>
             </ImagesWrapper>
+            
             <a
-                href={`/products${product.category?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
+                href={`/products${product.subcategory?.category?.slug?.current || product.category?.slug?.current }${product.subcategory?.slug?.current}${product.slug?.current}`}
             >
                 <ProductInfoWrapper>
                     <p>{product.title}</p>

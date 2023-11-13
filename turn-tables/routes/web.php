@@ -85,4 +85,6 @@ Route::post('/wishlist/add', 'App\Http\Controllers\WishlistController@addToWishl
 
 Route::post('/wishlist/remove', 'App\Http\Controllers\WishlistController@removeFromWishlist')->name('wishlist.remove');
 
+Route::post('/store-order', 'App\Http\Controllers\OrderController@storeOrder')->name('store.order');
+
 require __DIR__ . '/auth.php';

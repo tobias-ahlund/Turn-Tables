@@ -14,7 +14,6 @@ const AltHeader = styled.h1`
 export default function ProductsByCategory({ wishlistItems }) {
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState(null);
-    const [wishlistUpdated, setWishlistUpdated] = useState(wishlistItems);
     const [runEffectSortAlphabetical, setRunEffectSortAlphabetical] = useState(false);
     const [runEffectSortPriceAsc, setRunEffectSortPriceAsc] = useState(false);
 
@@ -70,10 +69,6 @@ export default function ProductsByCategory({ wishlistItems }) {
         }
     }, [handleSortPriceAsc])
 
-    function updateWishlist(updatedWishlist) {
-        setWishlistUpdated(updatedWishlist);
-    }
-
     function handleSortAlphabetical() {
         setRunEffectSortAlphabetical(true);
     }
@@ -104,8 +99,6 @@ export default function ProductsByCategory({ wishlistItems }) {
                             product={product}
                             showAddToCart={true}
                             showAddToWishlist={true}
-                            wishlistUpdated={wishlistUpdated}
-                            updateWishlist={updateWishlist}
                         />
                     ))}
                 </ProductsWrapper>
