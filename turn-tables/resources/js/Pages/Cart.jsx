@@ -6,36 +6,14 @@ import axios from 'axios';
 import getStripe from "@/lib/getStripe";
 
 const PageContentWrapper = styled.div`
-	margin-bottom: 8rem;
+	margin-bottom: 4rem;
 	display: flex;
 	flex-direction: column;
 
-	@media (min-width: 1200px) {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: auto auto auto;
-	}
-`
-
-const HeadingWrapper = styled.div`
-	display: flex;
-	align-items: center;
-	padding: 2rem 0 1rem 0;
-	margin-right: 2rem;
-    font-size: 3rem;
-    line-height: 100%;
-    border-bottom: 1px solid black;
-    margin-bottom: 2rem;
-
-	& h1 {
-		padding: 0;
-    	border-bottom: none;
-    	margin-bottom: 0;
-	}
-
-	& :last-child {
-		flex-grow: 1;
-		text-align: end;
+	@media (min-width: 1050px) {
+		flex-direction: row;
+		gap: 4rem;
+		justify-content: space-between;
 	}
 `
 
@@ -43,89 +21,110 @@ const ProductsWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+	max-width: 800px;
 `
 
-const CartDetails = styled.div`
-	display: flex;
-	justify-content: space-between;
-	margin-right: 2rem;
-	font-weight: bold;
-
-	& p {
-		max-width: 20%;
-		min-width: 20%;
-		text-align: center;
-	}
-
-	& p:first-child {
-		min-width: 40%;
-		max-width: 40%;
-		text-align: left;
-	}
-
-	& p:last-child {
-		text-align: right;
-	}
-`
-
-const CartCol1 = styled.div`
+const ProductCartWrapper = styled.div`
 	display: flex;
 	gap: .5rem;
-	min-width: 40%;
-	max-width: 40%;
 	text-align: left;
 
-	& div:last-child {
+	& > div:last-child {
 		display: flex;
 		justify-content: space-between;
 		flex-direction: column;
 		align-items: flex-start;
+		padding: .2rem 0;
+	}
+`
+
+const ProductName = styled.span`
+	font-weight: bold;
+	font-size: 1.2rem;
+`
+
+const ProductInfoWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+
+	@media (max-width: 450px) {
+		gap: 0;
+	}
+`
+
+const ProductInfo = styled.div`
+	display: flex;
+	width: 100%;
+	gap: 1rem;
+
+	& > span:first-child {
+		width: 6rem;
+		text-align: left;
+	}
+
+	& > button {
+		color: gray;
+		font-size: .9rem;
+	}
+
+	@media (max-width: 450px) {
+		& > span, & > button {
+			font-size: 80%;
+		}
+
+		& > span:first-child {
+			width: 4rem;
+		}
 	}
 `
 
 const OrderSummary = styled.div`
 	display: flex;
 	flex-direction: column;
+	font-weight: bold;
 	justify-content: flex-start;
-	background-color: #f7f7f7;
-	padding: 2rem	;
-	grid-column-start: 2;
-	grid-row: 1 / span 2;
 	gap: 1rem;
+
+	@media (max-width: 1050px) {
+		margin: 4rem auto 0 auto;
+	}
 	
 	& button {
-		text-align: left;
+		background-color: #2d6fa5;
+		border-radius: 50px;
+		padding: 1rem 1rem;
+		line-height: 100%;
+		color: white;
+	}
+
+	& > span:nth-of-type(2) {
+		font-weight: normal;
 	}
 `
 
 const OrderSumHeading = styled.div`
 	padding-bottom: 1rem;
-    font-size: 3rem;
+    font-size: 2rem;
     line-height: 100%;
     border-bottom: 1px solid black;
-    margin-bottom: 2rem;
 `
 
-const ProductCartWrapper = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-right: 2rem;
-	text-align: center;
-	
-	& > p {
-		margin: auto;
-		max-width: 20%;
-		min-width: 20%;
-	}
+const PurchaseInfo = styled.span`
+	border-bottom: 1px solid lightgray;
+	padding-bottom: 1rem;
+	font-weight: normal;
+`
 
-	& > p:last-child {
-		text-align: right;
-	}
-`;
+const OrderPrice = styled.div`
+	display: flex;
+	justify-content: space-between;
+	border-top: 1px solid lightgray;
+	padding-top: 1rem;
+`
 
 const ProductImage = styled.img`
-	max-width: 100px; 
+	max-width: 150px; 
 `;
 
 export default function Cart() {
@@ -188,43 +187,53 @@ export default function Cart() {
 
 	return (
 		<DefaultLayout>
+					<h1>Shopping Cart</h1>
 			<PageContentWrapper>
-				<HeadingWrapper>
-					<h1>Shopping cart</h1>
-					<h2>{cartCount} Item{cartCount > 1 && "s"}</h2>
-				</HeadingWrapper>
 				<ProductsWrapper>
-					<CartDetails>
-						<p>Product Details</p>
-						<p>Quantity</p>
-						<p>Price</p>
-						<p>Total</p>
-					</CartDetails>
 					{Object.values(cartDetails).map((item) => (
 						<ProductCartWrapper key={item.id}>
-							<CartCol1>
 								<ProductImage src={item.image} alt="Image of the product." />
 								<div>
-									<p>{item.name}</p>
-									<button onClick={() => handleRemoveItem(item)}>Remove</button>
+									<ProductName>{item.name}</ProductName>
+									<ProductInfoWrapper>
+										<ProductInfo>
+											<span>Price:</span>
+											<span>{item.price} kr</span>
+										</ProductInfo>
+										<ProductInfo>
+											<span>Total Price:</span> 
+											<span>{item.value} kr</span>
+										</ProductInfo>
+										<ProductInfo>
+											<span>Quantity:</span>
+											<span>{item.quantity}</span>
+										</ProductInfo>
+										<ProductInfo>
+											<button onClick={() => handleRemoveItem(item)}>Remove</button>
+										</ProductInfo>
+									</ProductInfoWrapper>
 								</div>
-							</CartCol1>
-								<p>{item.quantity}</p>
-								<p>{item.price}:-</p>
-								<p>{item.value}:-</p>
 						</ProductCartWrapper>
 					))}
 				</ProductsWrapper>
 
 				{cartCount > 0 && (
+					<div>
 					<OrderSummary>
 						<OrderSumHeading>Order Summary</OrderSumHeading>
-						<p>Total Cost {totalPrice}:-</p>
+						<PurchaseInfo>To complete purchase in this test version, use card number 4242 4242 4242 4242.</PurchaseInfo>
+						<span>Sign in to save your order history.</span>
+						<OrderPrice>
+							<p>Item{cartCount > 1 && "s"}</p>
+							<p>{cartCount}</p>
+						</OrderPrice>
+						<OrderPrice>
+							<p>Total Cost</p> 
+							<p>{totalPrice} kr</p>
+						</OrderPrice>
 						<button onClick={handleCheckout}>Checkout</button>
-						<p>To complete purchase in this test version, use card number 4242 4242 4242 4242.</p>
-						<p>Sign in to save your order history.</p>
-						{cartCount > 0 && <button onClick={clearCart}>Clear Cart</button>}
 					</OrderSummary>
+					</div>
 				)}
 			</PageContentWrapper>
 		</DefaultLayout>
