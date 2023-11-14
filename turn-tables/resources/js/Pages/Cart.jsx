@@ -5,10 +5,16 @@ import styled from 'styled-components';
 import axios from 'axios';
 import getStripe from "@/lib/getStripe";
 
-const Orka = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: auto auto auto;
+const PageContentWrapper = styled.div`
+	margin-bottom: 8rem;
+	display: flex;
+	flex-direction: column;
+
+	@media (min-width: 1200px) {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto auto;
+	}
 `
 
 const HeadingWrapper = styled.div`
@@ -43,10 +49,38 @@ const CartDetails = styled.div`
 	display: flex;
 	justify-content: space-between;
 	margin-right: 2rem;
+	font-weight: bold;
+
+	& p {
+		max-width: 20%;
+		min-width: 20%;
+		text-align: center;
+	}
+
+	& p:first-child {
+		min-width: 40%;
+		max-width: 40%;
+		text-align: left;
+	}
+
+	& p:last-child {
+		text-align: right;
+	}
 `
 
 const CartCol1 = styled.div`
 	display: flex;
+	gap: .5rem;
+	min-width: 40%;
+	max-width: 40%;
+	text-align: left;
+
+	& div:last-child {
+		display: flex;
+		justify-content: space-between;
+		flex-direction: column;
+		align-items: flex-start;
+	}
 `
 
 const OrderSummary = styled.div`
@@ -57,6 +91,11 @@ const OrderSummary = styled.div`
 	padding: 2rem	;
 	grid-column-start: 2;
 	grid-row: 1 / span 2;
+	gap: 1rem;
+	
+	& button {
+		text-align: left;
+	}
 `
 
 const OrderSumHeading = styled.div`
@@ -72,6 +111,17 @@ const ProductCartWrapper = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	margin-right: 2rem;
+	text-align: center;
+	
+	& > p {
+		margin: auto;
+		max-width: 20%;
+		min-width: 20%;
+	}
+
+	& > p:last-child {
+		text-align: right;
+	}
 `;
 
 const ProductImage = styled.img`
@@ -138,7 +188,7 @@ export default function Cart() {
 
 	return (
 		<DefaultLayout>
-			<Orka>
+			<PageContentWrapper>
 				<HeadingWrapper>
 					<h1>Shopping cart</h1>
 					<h2>{cartCount} Item{cartCount > 1 && "s"}</h2>
@@ -176,7 +226,7 @@ export default function Cart() {
 						{cartCount > 0 && <button onClick={clearCart}>Clear Cart</button>}
 					</OrderSummary>
 				)}
-			</Orka>
+			</PageContentWrapper>
 		</DefaultLayout>
 	);
 }
