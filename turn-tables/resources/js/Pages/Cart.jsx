@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useShoppingCart } from 'use-shopping-cart';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import styled from 'styled-components';
@@ -6,6 +6,7 @@ import axios from 'axios';
 import getStripe from "@/lib/getStripe";
 import CartProducts from '@/Components/CartProducts';
 import OrderSummary from '@/Components/OrderSummary';
+import { fetchAllProducts } from "@/turn-table-studio/utils/sanity.queries";
 
 const PageContentWrapper = styled.div`
 	margin-bottom: 4rem;
@@ -27,7 +28,23 @@ const ProductsWrapper = styled.div`
 `
 
 export default function Cart() {
+	const [products, setProducts] = useState("");
+
+	useEffect(() => {
+        fetchAllProducts()
+            .then((data) => {
+                setProducts(data);
+            })
+            .catch((error) => console.error('Error fetching products:', error));
+    }, []);
+	
 	const { redirectToCheckout, cartDetails, cartCount, totalPrice, removeItem, clearCart } = useShoppingCart();
+
+	const filteredProducts = Object.values(products).filter((product) => {
+  		return Object.values(cartDetails).some((cartProduct) => {
+    		return product._id === cartProduct.id;
+  		});
+	});
 
 	async function handleCheckout() {
 		const stripe = await getStripe();
@@ -78,17 +95,19 @@ export default function Cart() {
 			}
 		}
 
-		console.log(cartDetails);
-
 	return (
 		<DefaultLayout>
 					<h1>Your Cart</h1>
-					{cartCount <= 0 && <p>Your shopping cart appears to be empty.</p>}
+					{cartCount <= 0 && <h2>Your shopping cart appears to be empty.</h2>}
 			<PageContentWrapper>
 				<ProductsWrapper>
-					{Object.values(cartDetails).map((item) => (
-						<CartProducts key={item.id} item={item} />
-					))}
+  					{Object.values(cartDetails).map((item) => {
+    					const product = filteredProducts.find((p) => p._id === item.id);
+
+    					return product ? (
+      						<CartProducts key={item.id} item={item} product={product} />
+    					) : null;
+  					})}
 				</ProductsWrapper>
 
 				{cartCount > 0 && (

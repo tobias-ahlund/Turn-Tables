@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import CartQuantities from "./CartQuantities";
+import { Link } from "@inertiajs/react";
 
 const ProductCartWrapper = styled.div`
 	display: flex;
@@ -53,10 +54,14 @@ const ProductInfo = styled.div`
 	}
 `
 
-export default function CartProducts({ item }) {
+export default function CartProducts({ item, product }) {
     return (
         <ProductCartWrapper key={item.id}>
-            <ProductImage src={item.image} alt="Image of the product." />
+            <Link 
+                href={`/products${product.subcategory?.category?.slug?.current}${product.subcategory?.slug?.current}${product.slug?.current}`}
+            >
+                <ProductImage src={item.image} alt="Image of the product." />
+            </Link>
             <div>
                 <ProductName>{item.name}</ProductName>
                     <ProductInfo>
