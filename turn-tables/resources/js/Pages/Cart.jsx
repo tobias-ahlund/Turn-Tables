@@ -29,10 +29,6 @@ const ProductsWrapper = styled.div`
 export default function Cart() {
 	const { redirectToCheckout, cartDetails, cartCount, totalPrice, removeItem, clearCart } = useShoppingCart();
 
-	const handleRemoveItem = (item) => {
-	removeItem(item.id);
-	};
-
 	async function handleCheckout() {
 		const stripe = await getStripe();
 
@@ -86,11 +82,12 @@ export default function Cart() {
 
 	return (
 		<DefaultLayout>
-					<h1>Shopping Cart</h1>
+					<h1>Your Cart</h1>
+					{cartCount <= 0 && <p>Your shopping cart appears to be empty.</p>}
 			<PageContentWrapper>
 				<ProductsWrapper>
 					{Object.values(cartDetails).map((item) => (
-						<CartProducts key={item.id} item={item} handleRemoveItem={handleRemoveItem} />
+						<CartProducts key={item.id} item={item} />
 					))}
 				</ProductsWrapper>
 

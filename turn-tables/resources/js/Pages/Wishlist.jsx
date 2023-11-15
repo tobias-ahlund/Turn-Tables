@@ -42,7 +42,7 @@ export default function Wishlist({ productIds }) {
                 ) : (
                     <>
                         <h1>Wishlist</h1>
-                        <p>No products in your wishlist</p>
+                        <p>Your wishlist appears to be empty.</p>
                     </>
                 )}
                 </> 

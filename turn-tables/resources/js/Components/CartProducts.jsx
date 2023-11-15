@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import CartQuantities from "./CartQuantities";
 
 const ProductCartWrapper = styled.div`
 	display: flex;
@@ -7,11 +8,13 @@ const ProductCartWrapper = styled.div`
 
 	& > div:last-child {
 		display: flex;
-		justify-content: space-between;
 		flex-direction: column;
 		align-items: flex-start;
-		padding: .2rem 0;
 	}
+
+    & > div:last-child div:last-child {
+        margin-top: auto;
+    }
 `
 
 const ProductImage = styled.img`
@@ -21,16 +24,7 @@ const ProductImage = styled.img`
 const ProductName = styled.span`
 	font-weight: bold;
 	font-size: 1.2rem;
-`
-
-const ProductInfoWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 0.2rem;
-
-	@media (max-width: 450px) {
-		gap: 0;
-	}
+    margin-bottom: .5rem;
 `
 
 const ProductInfo = styled.div`
@@ -59,13 +53,12 @@ const ProductInfo = styled.div`
 	}
 `
 
-export default function CartProducts({ item, handleRemoveItem }) {
+export default function CartProducts({ item }) {
     return (
         <ProductCartWrapper key={item.id}>
             <ProductImage src={item.image} alt="Image of the product." />
             <div>
                 <ProductName>{item.name}</ProductName>
-                <ProductInfoWrapper>
                     <ProductInfo>
                         <span>Price:</span>
                         <span>{item.price} kr</span>
@@ -75,13 +68,8 @@ export default function CartProducts({ item, handleRemoveItem }) {
                         <span>{item.value} kr</span>
                     </ProductInfo>
                     <ProductInfo>
-                        <span>Quantity:</span>
-                        <span>{item.quantity}</span>
+                        <CartQuantities item={item} />
                     </ProductInfo>
-                    <ProductInfo>
-                        <button onClick={() => handleRemoveItem(item)}>Remove</button>
-                    </ProductInfo>
-                </ProductInfoWrapper>
             </div>
         </ProductCartWrapper>
 	)

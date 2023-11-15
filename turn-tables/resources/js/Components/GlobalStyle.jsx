@@ -25,5 +25,6 @@ export const GlobalStyle = createGlobalStyle`
         width: calc(100% - 4rem);
         margin: 0 auto;
         max-width: 1600px;
+        min-height: 100vh;
     }
 `
