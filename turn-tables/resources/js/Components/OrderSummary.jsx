@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Arrow from '@/public/images/ArrowDown.svg';
 import { Link } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react'
 
 const OrderSummaryWrapper = styled.div`
 	display: flex;
@@ -73,6 +74,8 @@ const OrderPrice = styled.div`
 `
 
 export default function OrderSummary({ handleCheckout, cartCount, totalPrice }) {
+    const { user } = usePage().props;
+
     return (
         <OrderSummaryWrapper>
             <OrderSumHeading>Cart Totals</OrderSumHeading>
@@ -85,7 +88,11 @@ export default function OrderSummary({ handleCheckout, cartCount, totalPrice }) 
                 </Link>
 			</ContinueShopping>
             <PurchaseInfo>To complete purchase in this test version, use card number 4242 4242 4242 4242.</PurchaseInfo>
-            <span>Sign in to save your order history.</span>
+            {user ? 
+                <span>Your order history will be saved on your profile page.</span>
+            :
+                <span>Sign in to save your order history.</span>
+            }
             <OrderPrice>
                 <p>Item{cartCount > 1 && "s"}</p>
                 <p>{cartCount}</p>
