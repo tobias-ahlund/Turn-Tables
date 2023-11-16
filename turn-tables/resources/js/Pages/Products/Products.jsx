@@ -10,14 +10,13 @@ export default function Products() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [prodsByCat, setProdsByCat] = useState("");
-    const [runEffectSortAlphabetical, setRunEffectSortAlphabetical] = useState(false);
-    const [runEffectSortPriceAsc, setRunEffectSortPriceAsc] = useState(false);
+    const [sort, setSort] = useState("");
 
     useEffect(() => {
-        if (runEffectSortAlphabetical) {
+        if (sort === "alphabetical") {
             console.log("sort alphabetical")
 
-            const productsSortedAlphabetical = products.sort((a, b) => {
+            const productsSortedAlphabetical = [...products].sort((a, b) => {
                 const titleA = a.title.toUpperCase();
                 const titleB = b.title.toUpperCase();
                 
@@ -31,22 +30,24 @@ export default function Products() {
             });
 
             setProducts(productsSortedAlphabetical);
-
-            setRunEffectSortAlphabetical(false);
         }
-    }, [handleSortAlphabetical]);
-
-    useEffect(() => {
-        if (runEffectSortPriceAsc) {
+        
+        if (sort === "priceAsc") {
             console.log("sort price ascending")
 
-            const productsSortedPriceAsc = products.sort((a, b) => a.price - b.price);
+            const productsSortedPriceAsc = [...products].sort((a, b) => a.price - b.price);
 
             setProducts(productsSortedPriceAsc);
-
-            setRunEffectSortPriceAsc(false);
         }
-    }, [handleSortPriceAsc]);
+
+        if (sort === "priceDesc") {
+            console.log("sort price descending")
+
+            const productsSortedPriceDesc = [...products].sort((a, b) => b.price - a.price);
+
+            setProducts(productsSortedPriceDesc);
+        }
+    }, [sort]);
 
     useEffect(() => {
         fetchAllProducts()
@@ -63,12 +64,8 @@ export default function Products() {
             .catch((error) => console.error('Error fetching categories:', error));
     }, []);
 
-    function handleSortAlphabetical() {
-        setRunEffectSortAlphabetical(true);
-    }
-
-    function handleSortPriceAsc() {
-        setRunEffectSortPriceAsc(true);
+    function handleSort(sortMethod) {
+        setSort(sortMethod);   
     }
 
     function fetchProdByCat(category) {
@@ -125,8 +122,7 @@ export default function Products() {
                 </CategoriesWrapper>
 
                 <SortButton 
-                    handleSortAlphabetical={() => {handleSortAlphabetical()}} 
-                    handleSortPriceAsc={() => {handleSortPriceAsc()}} 
+                    handleSort={handleSort}
                 />
 
                 {!prodsByCat && <ProductsWrapper>

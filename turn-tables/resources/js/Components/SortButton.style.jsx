@@ -70,7 +70,7 @@ const SortButtonDropdownLi = styled.li`
     }
 `;
 
-export default function SortButton({ handleSortPriceAsc, handleSortAlphabetical }) {
+export default function SortButton({ handleSort }) {
     const [open, setOpen] = useState(false);
     const [confirmSort, setConfirmSort] = useState("");
 
@@ -96,16 +96,26 @@ export default function SortButton({ handleSortPriceAsc, handleSortAlphabetical 
             {open && <SortButtonDropdown onClick={handleDropdownClick}>
                 <SortButtonDropdownUl>
                     <SortButtonDropdownLi onClick={() => {
-                            handleSortPriceAsc();
+                            handleSort("priceAsc");
                             handleConfirmSort("priceAsc");
-                        }}>
-                        <button>Price: low to high</button>
+                        }}
+                    >
+                        <button>Price: Low to High</button>
                         <ClickConfirmed $confirmSort={confirmSort === "priceAsc"} />
                     </SortButtonDropdownLi>
                     <SortButtonDropdownLi onClick={() => {
-                            handleSortAlphabetical(); 
+                            handleSort("priceDesc");
+                            handleConfirmSort("priceDesc");
+                        }}
+                    >
+                        <button>Price: High to Low</button>
+                        <ClickConfirmed $confirmSort={confirmSort === "priceDesc"} />
+                    </SortButtonDropdownLi>
+                    <SortButtonDropdownLi onClick={() => {
+                            handleSort("alphabetical"); 
                             handleConfirmSort("alphabetical");
-                        }}>
+                        }}
+                    >
                         <button>Name</button>
                         <ClickConfirmed $confirmSort={confirmSort === "alphabetical"} />
                     </SortButtonDropdownLi>

@@ -4,7 +4,7 @@ export const ProductsWrapper = styled.section`
     margin: 0 auto 2rem;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: 2rem;
+    gap: 3rem;
     max-width: 1600px;
 
     @media (min-width: 500px) {

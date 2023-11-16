@@ -14,8 +14,7 @@ const AltHeader = styled.h1`
 export default function ProductsByCategory({ wishlistItems }) {
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState(null);
-    const [runEffectSortAlphabetical, setRunEffectSortAlphabetical] = useState(false);
-    const [runEffectSortPriceAsc, setRunEffectSortPriceAsc] = useState(false);
+    const [sort, setSort] = useState("");
 
     const slug = "/" + location.pathname.split('/').slice(-1)[0];
     const categoryTitle = location.pathname
@@ -42,10 +41,10 @@ export default function ProductsByCategory({ wishlistItems }) {
         }, [slug]);
 
     useEffect(() => {
-        if (runEffectSortAlphabetical) {
+        if (sort === "alphabetical") {
             console.log("sort alphabetical")
 
-            const productsSortedAlphabetical = products.sort((a, b) => {
+            const productsSortedAlphabetical = [...products].sort((a, b) => {
                 const titleA = a.title.toUpperCase();
                 const titleB = b.title.toUpperCase();
                 
@@ -55,33 +54,31 @@ export default function ProductsByCategory({ wishlistItems }) {
                 if (titleA > titleB) {
                     return 1;
                 }
-                    return 0;
+                return 0;
             });
 
             setProducts(productsSortedAlphabetical);
-
-            setRunEffectSortAlphabetical(false);
         }
-    }, [handleSortAlphabetical])
-
-    useEffect(() => {
-        if (runEffectSortPriceAsc) {
+        
+        if (sort === "priceAsc") {
             console.log("sort price ascending")
 
-            const productsSortedPriceAsc = products.sort((a, b) => a.price - b.price);
+            const productsSortedPriceAsc = [...products].sort((a, b) => a.price - b.price);
 
-            setProducts(productsSortedPriceAsc)
-
-            setRunEffectSortPriceAsc(false);
+            setProducts(productsSortedPriceAsc);
         }
-    }, [handleSortPriceAsc])
 
-    function handleSortAlphabetical() {
-        setRunEffectSortAlphabetical(true);
-    }
+        if (sort === "priceDesc") {
+            console.log("sort price descending")
 
-    function handleSortPriceAsc() {
-        setRunEffectSortPriceAsc(true);
+            const productsSortedPriceDesc = [...products].sort((a, b) => b.price - a.price);
+
+            setProducts(productsSortedPriceDesc);
+        }
+    }, [sort]);
+
+    function handleSort(sortMethod) {
+        setSort(sortMethod);   
     }
 
     return (
@@ -95,8 +92,7 @@ export default function ProductsByCategory({ wishlistItems }) {
                 </BreadcrumbsWrapper>
 
                 <SortButton 
-                    handleSortAlphabetical={() => {handleSortAlphabetical()}} 
-                    handleSortPriceAsc={() => {handleSortPriceAsc()}} 
+                    handleSort={handleSort}
                 />
 
                 <ProductsWrapper>

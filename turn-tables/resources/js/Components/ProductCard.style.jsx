@@ -55,7 +55,7 @@ const ImagesWrapper = styled.div`
 const ProductInfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 0.5rem 0 0.5rem;
+    padding: 1rem 0.5rem 0 0.5rem;
     align-items: center;
 
     p:first-of-type {
