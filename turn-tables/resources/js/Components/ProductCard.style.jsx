@@ -85,11 +85,11 @@ const ProductCard = ({ product, showAddToCart, showAddToWishlist, onRemoveFromWi
     return (
         <ProductCardWrapper>
             <ImagesWrapper>
-                <a
+                <Link
                     href={`/products${product.subcategory?.category?.slug?.current || product.category?.slug?.current }${product.subcategory?.slug?.current}${product.slug?.current}`}
                 >
                     <img src={urlFor(product.image)} alt="Picture of the product." />
-                </a>
+                </Link>
                 <div>
                     {showAddToCart && (
                         <AddToCart
@@ -111,14 +111,14 @@ const ProductCard = ({ product, showAddToCart, showAddToWishlist, onRemoveFromWi
                 </div>
             </ImagesWrapper>
             
-            <a
+            <Link
                 href={`/products${product.subcategory?.category?.slug?.current || product.category?.slug?.current }${product.subcategory?.slug?.current}${product.slug?.current}`}
             >
                 <ProductInfoWrapper>
                     <p>{product.title}</p>
                     <p>{product.price}:-</p>
                 </ProductInfoWrapper>
-            </a>
+            </Link>
         </ProductCardWrapper>
     );
 };
