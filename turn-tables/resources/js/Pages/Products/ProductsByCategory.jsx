@@ -18,7 +18,14 @@ export default function ProductsByCategory({ wishlistItems }) {
     const [runEffectSortPriceAsc, setRunEffectSortPriceAsc] = useState(false);
 
     const slug = "/" + location.pathname.split('/').slice(-1)[0];
-    const categoryTitle = location.pathname.split('/').slice(-1)[0].charAt(0).toUpperCase() + location.pathname.split('/').slice(-1)[0].slice(1);
+    const categoryTitle = location.pathname
+        .split('/')
+        .slice(-1)[0]
+        .replace(/-/g, ' ')
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
 
     useEffect(() => {
         fetchProductsBySlug(slug)
