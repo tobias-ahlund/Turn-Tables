@@ -43,7 +43,7 @@ const CloseButtonWrapper = styled.div`
 
 const LogoCloseButtonWrapper = styled.div`
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     padding: 2rem 0 1rem 0;
     border-bottom: 1px solid black;
