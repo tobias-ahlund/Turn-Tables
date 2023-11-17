@@ -140,10 +140,15 @@ const Menu = () => {
         "All products",
         "Furniture",
         "Lighting",
-        "Decoration"
+        "Home Decor"
     ]
 
-    const categoriesLowerCase = categories.map(category => category.toLowerCase());
+    const categoriesFormatted = categories.map((category) => { 
+        if (category != 'All products') {
+            category = category.replace(/ /g, '-');
+        }
+        return category.toLowerCase()}
+    );
 
     function handleToggleMenu() {
         setShowMenu(!showMenu);
@@ -171,7 +176,7 @@ const Menu = () => {
                         </Link>
                     </UserLink>
                     <MenuList>
-                        {categoriesLowerCase.map((category, index) =>
+                        {categoriesFormatted.map((category, index) =>
                             <li key={index}>
                                 <Link
                                     href={category !== "all products" ? route('products.category', { categorySlug: category }) : route('products')}
