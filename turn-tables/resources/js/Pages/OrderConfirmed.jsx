@@ -18,34 +18,48 @@ const ProductImage = styled.img`
 `;
 
 export default function OrderConfirmed() {
-    const [order, setOrder] = useState("");
-    const [priceOrder, setPriceOrder] = useState("");
-
-    useEffect(() => {
-        setOrder(cartDetails);
-        setPriceOrder(totalPrice);
-
-        clearCart();
-    }, []);
+    const [orderDetails, setOrderDetails] = useState("");
+    const [totalOrderPrice, setTotalOrderPrice] = useState("");
 
     const { totalPrice, clearCart, cartDetails } = useShoppingCart();
 
+    useEffect(() => {
+        const storedOrderDetails = JSON.parse(sessionStorage.getItem("orderDetailsStorage"));
+        const storedTotalPrice = JSON.parse(sessionStorage.getItem("totalPriceStorage")); 
+
+        if (Object.keys(cartDetails).length > 0) {
+            sessionStorage.setItem("orderDetailsStorage", JSON.stringify(cartDetails));
+        }
+
+        if (totalPrice) {
+            sessionStorage.setItem("totalPriceStorage", JSON.stringify(totalPrice));
+        }
+
+        setOrderDetails(storedOrderDetails);
+        setTotalOrderPrice(storedTotalPrice);
+
+        clearCart();
+        
+    }, [totalOrderPrice]);
+
     return (
         <DefaultLayout>
-            <h1>Order summary</h1>
-            {priceOrder > 0 && <p>Total price: {priceOrder} SEK</p>}
+            <h1>Order confirmed</h1>
+            {totalOrderPrice > 0 && <p>Total price: {totalOrderPrice} kr</p>}
 
-			{Object.values(order).map((item) => (
+            {orderDetails && 
+			Object.values(orderDetails).map((item) => (
 				<ProductSummaryWrapper key={item.id}>
 					<ProductImage src={item.image} alt="Image of the product." />
 					<div>
                         <p>{item.name}</p>
-                        <p>Price: {item.price} SEK</p>
-                        <p>Total price: {item.value} SEK</p>
+                        <p>Price: {item.price} kr</p>
+                        <p>Total price: {item.value} kr</p>
                         <p>Quantity: {item.quantity}</p>
 					</div>
 				</ProductSummaryWrapper>
-			))}
+			))
+            }
 
             <Link
                 href={route('home')}
