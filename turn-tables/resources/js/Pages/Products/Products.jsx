@@ -5,6 +5,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { CategoriesWrapper } from '@/Components/CategoriesWrapper.style';
 import SortButton from '@/Components/SortButton.style';
 import ProductCard from '@/Components/ProductCard.style';
+import { Link } from '@inertiajs/react';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -114,9 +115,9 @@ export default function Products() {
                     <h2>Shop by category</h2>
                     {categories.map((category) => (
                         <div key={category._id}>
-                            <a href={`/products${category.slug.current}`}>
+                            <Link href={`/products${category.slug.current}`}>
                                 <button onClick={() => fetchProdByCat(category.title)}>{category.title}</button>
-                            </a>
+                            </Link>
                         </div>
                     ))}
                 </CategoriesWrapper>

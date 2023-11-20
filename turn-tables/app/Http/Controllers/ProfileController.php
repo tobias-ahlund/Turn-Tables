@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Order;
 
 class ProfileController extends Controller
 {
@@ -18,9 +19,15 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+
+        $user = $request->user();
+
+        $orders = Order::where('user_id', $user->id)->get();
+
         return Inertia::render('Profile/Edit', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'mustVerifyEmail' => $user instanceof MustVerifyEmail,
             'status' => session('status'),
+            'orders' => $orders,
         ]);
     }
 

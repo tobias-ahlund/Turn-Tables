@@ -31,6 +31,25 @@ const ProductImage = styled.img`
 export default function OrderConfirmed() {
     const [orderDetails, setOrderDetails] = useState("");
     const [totalOrderPrice, setTotalOrderPrice] = useState("");
+    const [order, setOrder] = useState([]);
+    const [priceOrder, setPriceOrder] = useState(0);
+
+    function storeOrder() { axios.post(route('store.order'), { cart_details: cartDetails, total_price: totalPrice }, 
+        {
+            headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            }
+        });
+    }
+
+    useEffect(() => {
+        setOrder(cartDetails);
+        setPriceOrder(totalPrice);
+        storeOrder();
+
+        clearCart();
+    }, []);
 
     const { totalPrice, clearCart, cartDetails } = useShoppingCart();
 

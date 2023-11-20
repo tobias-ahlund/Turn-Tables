@@ -9,6 +9,7 @@ import Increment from '@/public/images/Increment.svg';
 import Decrement from '@/public/images/Decrement.svg';
 import styled from 'styled-components';
 import SingleProductCard from '@/Components/SingleProductCard';
+import { Link } from '@inertiajs/react';
 
 const InfoWrapper = styled.div`
     display: flex;
@@ -85,9 +86,9 @@ export default function Product({ wishlistItems }) {
         <>
             <DefaultLayout>
                 <BreadcrumbsWrapper $singleProduct>
-                    <a href="/products"><span>Products</span></a>
+                    <Link href="/products"><span>Products</span></Link>
                     <span> &gt; </span>
-                    <a href={`/products${product && product.subcategory.category.slug.current}`}><span>{product && product.subcategory.category.title}</span></a>
+                    <Link href={`/products${product && product.subcategory.category.slug.current}`}><span>{product && product.subcategory.category.title}</span></Link>
                     <span> &gt; </span>
                     <span>{product && product.subcategory.title}</span>
                     <span> &gt; </span>

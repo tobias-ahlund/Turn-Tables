@@ -92,6 +92,25 @@ const getWishlist = `*[_type == 'product' && (_id in $ids)]
   },
 }`
 
+const getPreviousOrders = `*[_type == 'product' && (_id in $ids)]
+{
+  _id,
+  title,
+  "image": image.asset->url,
+  description,
+  price,
+  currency,
+  slug,
+  subcategory->{
+    title,
+    slug,
+    category->{
+      title,
+      slug,
+    },
+  },
+}`
+
 const fetchAllProducts = () => client.fetch(getAllProducts);
 
 const fetchAllCategories = () => client.fetch(getAllCategories);
@@ -112,4 +131,8 @@ const fetchProductsBySlug = (slug) => {
   return client.fetch(getProductsBySlug, { slug });
 };
 
-export { fetchAllProducts, fetchProductBySlug, fetchProductsBySlug, fetchAllCategories, fetchCategory, fetchWishlist };
+const fetchPreviousOrders = (ids) => {
+  return client.fetch(getPreviousOrders, { ids });
+}
+
+export { fetchAllProducts, fetchProductBySlug, fetchProductsBySlug, fetchAllCategories, fetchCategory, fetchWishlist, fetchPreviousOrders };

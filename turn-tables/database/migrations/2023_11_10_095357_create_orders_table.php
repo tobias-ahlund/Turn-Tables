@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('order_id', 255);
             $table->decimal('price');
             $table->string('product_id');

@@ -72,14 +72,6 @@ export default function Cart() {
 			});
 
 			if (response.status === 200) {
-				
-				axios.post(route('store.order'), { cart_details: cartDetails, total_price: totalPrice }, {
-					headers: {
-					  'Content-Type': 'application/json',
-					  'X-CSRF-TOKEN': csrfToken,
-					}
-				});
-
 				const { error } = await stripe.redirectToCheckout({
 					sessionId: response.data.sessionId,
 				});

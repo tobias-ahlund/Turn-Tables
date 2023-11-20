@@ -6,6 +6,7 @@ import { BreadcrumbsWrapper } from '@/Components/Breadcrumbs.style';
 import ProductCard from '@/Components/ProductCard.style';
 import SortButton from '@/Components/SortButton.style';
 import styled from 'styled-components';
+import { Link } from '@inertiajs/react';
 
 const AltHeader = styled.h1`
     margin-bottom: .5rem;
@@ -86,7 +87,7 @@ export default function ProductsByCategory({ wishlistItems }) {
             <DefaultLayout>
                 <AltHeader>{categoryTitle}</AltHeader>
                 <BreadcrumbsWrapper>
-                    <a href="/products"><span>Products</span></a>
+                    <Link href="/products"><span>Products</span></Link>
                     <span> &gt; </span>
                     <span>{category && category.title}</span>
                 </BreadcrumbsWrapper>
