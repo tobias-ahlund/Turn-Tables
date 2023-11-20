@@ -4,6 +4,17 @@ import { useShoppingCart } from 'use-shopping-cart';
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
+const OrderConfirmedWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 400px;
+
+    & > h2, & > span {
+        text-align: center;
+    }
+`
+
 const ProductSummaryWrapper = styled.div`
 	display: flex;
 	align-items: center;
@@ -45,27 +56,36 @@ export default function OrderConfirmed() {
     return (
         <DefaultLayout>
             <h1>Order confirmed</h1>
-            {totalOrderPrice > 0 && <p>Total price: {totalOrderPrice} kr</p>}
+            <OrderConfirmedWrapper>
+                <h2>Order no. 1234567</h2>
+                <span>01/01/2034</span>
 
-            {orderDetails && 
-			Object.values(orderDetails).map((item) => (
-				<ProductSummaryWrapper key={item.id}>
-					<ProductImage src={item.image} alt="Image of the product." />
-					<div>
-                        <p>{item.name}</p>
-                        <p>Price: {item.price} kr</p>
-                        <p>Total price: {item.value} kr</p>
-                        <p>Quantity: {item.quantity}</p>
-					</div>
-				</ProductSummaryWrapper>
-			))
-            }
+                {orderDetails && 
+                Object.values(orderDetails).map((item) => (
+                    <ProductSummaryWrapper key={item.id}>
+                        <ProductImage src={item.image} alt="Image of the product." />
+                        <div>
+                            <p>{item.name}</p>
+                            <p>Price: {item.price} kr</p>
+                            <p>Total price: {item.value} kr</p>
+                            <p>Quantity: {item.quantity}</p>
+                        </div>
+                    </ProductSummaryWrapper>
+                ))
+                }
 
-            <Link
-                href={route('home')}
-            >
-                <button>Got it!</button>
-            </Link>
+                <p>Subtotal: {totalOrderPrice} kr</p>
+                <p>Delivery: 0 kr</p>
+                <p>Total: {totalOrderPrice} kr</p>
+
+                <p>Payment Method: Card</p>
+
+                <Link
+                    href={route('home')}
+                >
+                    <button>Go to the home page</button>
+                </Link>
+            </OrderConfirmedWrapper>
         </DefaultLayout>
     );
 }

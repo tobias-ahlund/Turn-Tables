@@ -5,6 +5,7 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import styled from 'styled-components';
+import { Link } from '@inertiajs/react';
 
 const UpdateProfileArticle = styled.article`
     padding: 1rem;
@@ -19,6 +20,7 @@ export default function Edit({ mustVerifyEmail, status }) {
             <h1>Profile</h1>
 
             <section>
+                <Link href={route("logout")} as="button" method="post">Log out</Link>
                 <div>
                     <UpdateProfileArticle>
                         <UpdateProfileInformationForm

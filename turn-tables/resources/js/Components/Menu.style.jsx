@@ -59,6 +59,8 @@ const UserLink = styled.div`
     padding: 2rem 0 2rem 0;
     border-bottom: 1px solid black;
     margin: 0 2rem;
+    display: flex;
+    justify-content: space-between;
 
     & a {
         display: flex;
@@ -172,8 +174,11 @@ const Menu = () => {
                             href={route(user ? "dashboard" : "login")}    
                         >
                             <img src={Profile} alt="Profile page link icon" />
-                            {user ? `Signed in as ${user.name}` : "Sign in/register"}
+                            {user ? `Logged in as ${user.name}` : "Log in/register"}
                         </Link>
+                        {user && <Link href={route('logout')} method="post" as="button">
+                            Log out
+                        </Link>}
                     </UserLink>
                     <MenuList>
                         {categoriesFormatted.map((category, index) =>

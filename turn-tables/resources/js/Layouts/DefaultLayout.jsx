@@ -1,13 +1,13 @@
 import Header from "@/Components/Header.style";
 import Footer from "@/Components/Footer.style";
 import { Head } from '@inertiajs/react'
-import ShoppingCart from '@/public/images/ShoppingCart.svg';
+import LogoImage from '@/public/images/logo.svg';
 
 export default function DefaultLayout({ children }) {
     return (
         <>
             <Head>
-                <link rel="icon" type="image/svg+xml" href={ShoppingCart} />
+                <link rel="icon" type="image/svg+xml" href={LogoImage} />
                 <title>Turn Tables</title>
             </Head>
             <div>

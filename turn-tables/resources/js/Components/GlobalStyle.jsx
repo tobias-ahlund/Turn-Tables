@@ -22,9 +22,13 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     main {
-        width: calc(100% - 4rem);
+        width: calc(100% - 6rem);
         margin: 0 auto;
         max-width: 1600px;
         min-height: 100vh;
+
+        @media (max-width: 500px) {
+            width: calc(100% - 3rem);
+        }
     }
 `
