@@ -17,6 +17,30 @@ const UpdateProfileArticle = styled.article`
 
 export default function Edit({ mustVerifyEmail, status, orders }) {
 
+    const [previousOrders, setPreviousOrders] = useState([]);
+    const [products, setProducts] = useState([]);
+
+    const groupedOrders = Object.groupBy(orders, ({ order_id }) => order_id);
+
+    const productIds = Array.from(
+        new Set(
+            orders.flatMap(order => order.product_id)
+        )
+    );
+
+    useEffect(() => {
+
+        fetchPreviousOrders()
+        .then((data) => {
+            setProducts(data);
+        })
+        .catch((error) => console.error('Error fetching products:', error));
+
+        setPreviousOrders(groupedOrders);
+    }, []);
+
+    console.log(previousOrders);
+
     return (
         <DefaultLayout>
             <Head title="Profile" />
@@ -26,12 +50,16 @@ export default function Edit({ mustVerifyEmail, status, orders }) {
                 <Link href={route("logout")} as="button" method="post">Log out</Link>
                 <div>
                     <UpdateProfileArticle>
-                        <h2>Orders</h2>
-                        {orders.map(order => (
-                            <div key={order.id}>
-                                <p>Order Id: {order.order_id}</p>
-                                <p>Product Id: {order.product_id}</p>
-                                <p>Total Cost: {order.price} SEK</p>
+                        <h2>Previous Orders</h2>
+                        {Object.values(previousOrders).map(orderGroup => (
+                            <div key={orderGroup[0].order_id}>
+                                <h3>Order ID: {orderGroup[0].order_id}</h3>
+                                {orderGroup.map(individualOrder => (
+                                    <div key={individualOrder.id}>
+                                        <p>Product Id: {individualOrder.product_id}</p>
+                                        <p>Total Cost: {individualOrder.price} SEK</p>
+                                    </div>
+                                ))}
                             </div>
                         ))}
                     </UpdateProfileArticle>
