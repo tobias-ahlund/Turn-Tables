@@ -68,6 +68,10 @@ Route::get('/search/{searchQuerySlug}', function ($searchQuerySlug) {
 })->name('search');
 
 Route::get('/products/{categorySlug}', function ($categorySlug) {
+    if ($categorySlug != "home-decor" && $categorySlug != "furniture" && $categorySlug != "lighting") {
+        abort(404);
+    }
+
     return Inertia::render('Products/ProductsByCategory', [
         'categorySlug' => $categorySlug,
     ]);
@@ -86,5 +90,7 @@ Route::post('/wishlist/add', 'App\Http\Controllers\WishlistController@addToWishl
 Route::post('/wishlist/remove', 'App\Http\Controllers\WishlistController@removeFromWishlist')->name('wishlist.remove');
 
 Route::post('/store-order', 'App\Http\Controllers\OrderController@storeOrder')->name('store.order');
+
+Route::post("/webhook", "App\Http\Controllers\WebhookController@getWebhook")->name("webhook");
 
 require __DIR__ . '/auth.php';
