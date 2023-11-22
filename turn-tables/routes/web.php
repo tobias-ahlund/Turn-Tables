@@ -29,9 +29,7 @@ Route::get('/', function () {
     ]);
 }); */
 
-Route::get('/order-confirmed', function () {
-    return Inertia::render('OrderConfirmed');
-})->name('order-confirmed');
+Route::get('/order-confirmed', 'App\Http\Controllers\OrderConfirmedController@checkSessionId')->name('order-confirmed');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
