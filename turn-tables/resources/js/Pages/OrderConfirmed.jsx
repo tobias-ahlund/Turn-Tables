@@ -77,9 +77,7 @@ export default function OrderConfirmed() {
             <h1>Order confirmed</h1>
             <OrderConfirmedWrapper>
                 {orderDetails ? 
-                    <><h2>Order no. 1234567</h2>
-                    <span>01/01/2034</span>
-
+                    <><h2>Products</h2>
                     {Object.values(orderDetails).map((item) => (
                         <ProductSummaryWrapper key={item.id}>
                             <ProductImage src={item.image} alt="Image of the product." />
