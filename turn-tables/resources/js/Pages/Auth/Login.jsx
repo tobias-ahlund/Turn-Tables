@@ -31,6 +31,8 @@ export default function Login({ status, canResetPassword }) {
         <DefaultLayout>
             <Head title="Log in" />
 
+            <h1>Log in</h1>
+
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
             
             <form onSubmit={submit}>

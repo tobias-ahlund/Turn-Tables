@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Wishlist;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
@@ -24,13 +25,18 @@ class WishlistController extends Controller
 
     public function getWishlist(Request $request)
     {
-        $user = $request->user();
+        if(Auth::user()) {
 
-        $productIds = Wishlist::where('user_id', $user->id)->pluck('product_id');
+            $user = $request->user();
 
-        Inertia::share('wishlistItems', $productIds);
+            $productIds = Wishlist::where('user_id', $user->id)->pluck('product_id');
 
-        return response()->json(['productIds' => $productIds]);
+            Inertia::share('wishlistItems', $productIds);
+
+            return response()->json(['productIds' => $productIds]);
+        } else {
+            return response()->json(['productIds' => []]);
+        }
     }
 
     public function addToWishlist(Request $request)

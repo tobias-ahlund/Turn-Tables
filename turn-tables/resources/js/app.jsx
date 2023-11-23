@@ -7,6 +7,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 import { GlobalStyle } from './Components/GlobalStyle';
 import { CartProvider } from 'use-shopping-cart';
+import { WishlistProvider } from './Components/WishlistProvider';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -26,8 +27,10 @@ createInertiaApp({
                 currency="sek"
             >
                 <>
-                <GlobalStyle />
-                <App {...props} />
+                <WishlistProvider>
+                    <GlobalStyle />
+                    <App {...props} />
+                </WishlistProvider>
                 </>
             </CartProvider>);
     },
