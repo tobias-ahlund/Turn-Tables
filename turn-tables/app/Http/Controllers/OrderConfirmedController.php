@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Error;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,13 +11,18 @@ class OrderConfirmedController extends Controller
     public function checkSessionId() 
     {
         $stripe = new \Stripe\StripeClient(env("VITE_STRIPE_SECRET_KEY"));
+
         try {
-            $session = $stripe->checkout->sessions->retrieve($_GET['session_id']);
-            
+            $sessionId = $stripe->checkout->sessions->retrieve($_GET['session_id']);
+        
+        if ($sessionId) {
             return Inertia::render("OrderConfirmed");
-        } catch (Error $e) {
-            http_response_code(500);
-            echo json_encode(['error' => $e->getMessage()]);
+        } else {
+            abort(403);
+        };
+
+        } catch (Exception) {
+            abort(403);
         }
     }
 }

@@ -76,28 +76,35 @@ export default function OrderConfirmed() {
         <DefaultLayout>
             <h1>Order confirmed</h1>
             <OrderConfirmedWrapper>
-                <h2>Order no. 1234567</h2>
-                <span>01/01/2034</span>
+                {orderDetails ? 
+                    <><h2>Order no. 1234567</h2>
+                    <span>01/01/2034</span>
 
-                {orderDetails && 
-                Object.values(orderDetails).map((item) => (
-                    <ProductSummaryWrapper key={item.id}>
-                        <ProductImage src={item.image} alt="Image of the product." />
-                        <div>
-                            <p>{item.name}</p>
-                            <p>Price: {item.price} kr</p>
-                            <p>Total price: {item.value} kr</p>
-                            <p>Quantity: {item.quantity}</p>
-                        </div>
-                    </ProductSummaryWrapper>
-                ))
+                    {Object.values(orderDetails).map((item) => (
+                        <ProductSummaryWrapper key={item.id}>
+                            <ProductImage src={item.image} alt="Image of the product." />
+                            <div>
+                                <p>{item.name}</p>
+                                <p>Price: {item.price} kr</p>
+                                <p>Total price: {item.value} kr</p>
+                                <p>Quantity: {item.quantity}</p>
+                            </div>
+                        </ProductSummaryWrapper>
+                    ))}
+
+                    <p>Subtotal: {totalOrderPrice} kr</p>
+                    <p>Delivery: 0 kr</p>
+                    <p>Total: {totalOrderPrice} kr</p>
+
+                    <p>Payment Method: Card</p></>
+                :
+                    <p>It appears that the details for your order have disappeared from this page.
+                    <br /><br />
+                    If you made the order while logged in, you will find the details stored in your profile page. Simply log in and navigate to your profile to access your order history.
+                    <br /><br />
+                    Additionally, all orders come with a confirmation email containing all the important details.
+                    <br /><br /></p>
                 }
-
-                <p>Subtotal: {totalOrderPrice} kr</p>
-                <p>Delivery: 0 kr</p>
-                <p>Total: {totalOrderPrice} kr</p>
-
-                <p>Payment Method: Card</p>
 
                 <Link
                     href={route('home')}
