@@ -171,7 +171,7 @@ const Menu = () => {
                     </LogoCloseButtonWrapper>
                     <UserLink>
                         <Link
-                            href={route(user ? "dashboard" : "login")}    
+                            href={route(user ? "profile.edit" : "login")}    
                         >
                             <img src={Profile} alt="Profile page link icon" />
                             {user ? `Logged in as ${user.name}` : "Log in/register"}
