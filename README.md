@@ -11,3 +11,4 @@ E-commerce web site for a fictitious company that sells furniture
 5. For Sanity installation, head into folders /resources/js/turn-table-studio and do an npm install.
 6. Create .env file.
 7. Copy and paste content from .env.example to your new .env file.
+8. Run "npm run dev" and "php artisan serve".
