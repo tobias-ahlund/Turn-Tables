@@ -15,8 +15,6 @@ export default function Products() {
 
     useEffect(() => {
         if (sort === "alphabetical") {
-            console.log("sort alphabetical")
-
             const productsSortedAlphabetical = [...products].sort((a, b) => {
                 const titleA = a.title.toUpperCase();
                 const titleB = b.title.toUpperCase();
@@ -34,16 +32,12 @@ export default function Products() {
         }
         
         if (sort === "priceAsc") {
-            console.log("sort price ascending")
-
             const productsSortedPriceAsc = [...products].sort((a, b) => a.price - b.price);
 
             setProducts(productsSortedPriceAsc);
         }
 
         if (sort === "priceDesc") {
-            console.log("sort price descending")
-
             const productsSortedPriceDesc = [...products].sort((a, b) => b.price - a.price);
 
             setProducts(productsSortedPriceDesc);
@@ -60,7 +54,6 @@ export default function Products() {
         fetchAllCategories()
             .then((data) => {
                 setCategories(data);
-                console.log(data);
             })
             .catch((error) => console.error('Error fetching categories:', error));
     }, []);

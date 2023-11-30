@@ -36,9 +36,6 @@ export const AddToWishlist = ({ productId, onRemoveFromWishlist }) => {
       .then(response => {
         if (response.status === 200) {
           setWishlistItems([...wishlistItems, productId]);
-          console.log("Added to wishlist!");
-        } else {
-          console.error('Error adding product to wishlist');
         }
       })
       .catch(error => {
@@ -67,13 +64,9 @@ export const AddToWishlist = ({ productId, onRemoveFromWishlist }) => {
         if (response.status === 200) {
           const updatedWishlist = wishlistItems.filter(item => item !== productId);
           setWishlistItems(updatedWishlist);
-          console.log("Removed from wishlist!");
-
           if (onRemoveFromWishlist) {
             onRemoveFromWishlist(productId);
           }
-        } else {
-          console.error('Error removing product from wishlist');
         }
       })
       .catch(error => {
