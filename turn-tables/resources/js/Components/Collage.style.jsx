@@ -107,6 +107,12 @@ const imagesArr = [
     Decoration2,
 ]
 
+const categoryLinks = [
+	"/products/furniture",
+	"/products/lighting",
+	"/products/home-decor",
+]
+
 const shop = [
 	"Shop Furniture",
 	"Shop Lighting",
@@ -129,7 +135,7 @@ export default function Collage() {
     <CollageWrapper>
         {imagesArr.map((item, index) => (
             <CollageItemWrapper key={index}>
-				<Link>
+				<Link href={categoryLinks[index]}>
 					<img src={item} alt="collage image" />
 					<span>{shop[index]}</span>
 				</Link>
