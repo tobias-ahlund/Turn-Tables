@@ -11,7 +11,6 @@ export default function Home() {
         fetchAllCategories()
             .then((data) => {
                 setCategories(data);
-                console.log(data);
             })
             .catch((error) => console.error('Error fetching categories:', error));
     }, []);

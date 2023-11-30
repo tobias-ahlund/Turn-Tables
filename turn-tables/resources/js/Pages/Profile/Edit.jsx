@@ -1,4 +1,3 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { useEffect, useState } from 'react';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
@@ -25,6 +24,9 @@ export default function Edit({ mustVerifyEmail, status, orders }) {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
+                if(!orders){
+                    return;
+                }
                 const productIds = Array.from(
                     new Set(
                         orders.map(order => order.product_id)
@@ -65,19 +67,11 @@ export default function Edit({ mustVerifyEmail, status, orders }) {
                     <UpdateProfileArticle>
                         <h2>Previous Orders</h2>
                         {Object.values(previousOrders).map(orderGroup => (
-                            <PreviousOrderCard key={orderGroup[0].order_id} previousOrders={orderGroup} products={products}></PreviousOrderCard>
-
-                            // <div key={orderGroup[0].order_id}>
-                            //     <h3>Order ID: {orderGroup[0].order_id}</h3>
-                            //     {orderGroup.map(individualOrder => (
-                            //         <div key={individualOrder.id}>
-                            //             <p>Product Id: {individualOrder.product_id}</p>
-                            //             <p>Product Title: {getProductTitle(individualOrder.product_id)}</p>
-                            //             <img src={getProductImage(individualOrder.product_id)} alt="Image of the product."></img>
-                            //             <p>Total Cost: {individualOrder.price} SEK</p>
-                            //         </div>
-                            //     ))}
-                            // </div>
+                            <PreviousOrderCard 
+                                key={orderGroup[0].order_id}
+                                previousOrders={orderGroup}
+                                products={products}>
+                            </PreviousOrderCard>
                         ))}
                     </UpdateProfileArticle>
 
